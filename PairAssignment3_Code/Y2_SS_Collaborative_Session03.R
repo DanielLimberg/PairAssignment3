@@ -71,7 +71,7 @@ aggrtdis$Impact <- NULL
 aggrtdis$Disaster <- (aggrtdis$Drought + aggrtdis$Earthquake + aggrtdis$Epidemic + aggrtdis$Flood + aggrtdis$Landslide + aggrtdis$Storm + aggrtdis$Wildfire)
 rm(dis, disastercc)
 
-
+# Germany
 URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EGDAXI&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
 DAX <- read.csv(URL)
 colnames(DAX) <- paste("DAX", colnames(DAX), sep = ".")
@@ -81,7 +81,7 @@ DAX$year <- substring(DAX$year,1,nchar(DAX$year)-6)
 DAX <- ddply(DAX, .(year), function(DAX) c(DAX.Open=mean(DAX$DAX.Open), DAX.High=mean(DAX$DAX.High), DAX.Low=mean(DAX$DAX.Low), DAX.Close=mean(DAX$DAX.Close), DAX.Volume=mean(DAX$DAX.Volume), DAX.Adj.Close=mean(DAX$DAX.Adj.Close)))
 DAX$year <- as.numeric(DAX$year)
 
-
+# Japan
 URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EN225&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
 NIKKEI <- read.csv(URL)
 colnames(NIKKEI) <- paste("NIK", colnames(NIKKEI), sep = ".")
@@ -91,6 +91,7 @@ NIKKEI$year <- substring(NIKKEI$year,1,nchar(NIKKEI$year)-6)
 NIKKEI <- ddply(NIKKEI, .(year), function(NIKKEI) c(NIK.Open=mean(NIKKEI$NIK.Open), NIK.High=mean(NIKKEI$NIK.High), NIK.Low=mean(NIKKEI$NIK.Low), NIK.Close=mean(NIKKEI$NIK.Close), NIK.Volume=mean(NIKKEI$NIK.Volume), NIK.Adj.Close=mean(NIKKEI$NIK.Adj.Close)))
 NIKKEI$year <- as.numeric(NIKKEI$year)
 
+# UK
 URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EFTSE&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
 FTSE <- read.csv(URL)
 colnames(FTSE) <- paste("FTSE", colnames(FTSE), sep = ".")
@@ -100,7 +101,7 @@ FTSE$year <- substring(FTSE$year,1,nchar(FTSE$year)-6)
 FTSE <- ddply(FTSE, .(year), function(FTSE) c(FTSE.Open=mean(FTSE$FTSE.Open), FTSE.High=mean(FTSE$FTSE.High), FTSE.Low=mean(FTSE$FTSE.Low), FTSE.Close=mean(FTSE$FTSE.Close), FTSE.Volume=mean(FTSE$FTSE.Volume), FTSE.Adj.Close=mean(FTSE$FTSE.Adj.Close)))
 FTSE$year <- as.numeric(FTSE$year)
 
-
+# France
 URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EFCHI&a=00&b=1&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
 CAC <- read.csv(URL)
 colnames(CAC) <- paste("CAC", colnames(CAC), sep = ".")
@@ -110,7 +111,7 @@ CAC$year <- substring(CAC$year,1,nchar(CAC$year)-6)
 CAC <- ddply(CAC, .(year), function(CAC) c(CAC.Open=mean(CAC$CAC.Open), CAC.High=mean(CAC$CAC.High), CAC.Low=mean(CAC$CAC.Low), CAC.Close=mean(CAC$CAC.Close), CAC.Volume=mean(CAC$CAC.Volume), CAC.Adj.Close=mean(CAC$CAC.Adj.Close)))
 CAC$year <- as.numeric(CAC$year)
 
-
+# Brasil
 URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EBVSP&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
 IBOV <- read.csv(URL)
 colnames(IBOV) <- paste("IBOV", colnames(IBOV), sep = ".")
@@ -120,7 +121,7 @@ IBOV$year <- substring(IBOV$year,1,nchar(IBOV$year)-6)
 IBOV <- ddply(IBOV, .(year), function(IBOV) c(IBOV.Open=mean(IBOV$IBOV.Open), IBOV.High=mean(IBOV$IBOV.High), IBOV.Low=mean(IBOV$IBOV.Low), IBOV.Close=mean(IBOV$IBOV.Close), IBOV.Volume=mean(IBOV$IBOV.Volume), IBOV.Adj.Close=mean(IBOV$IBOV.Adj.Close)))
 IBOV$year <- as.numeric(IBOV$year)
 
-
+# Russia
 URL <- "http://real-chart.finance.yahoo.com/table.csv?s=OMRU.EX&a=00&b=01&c=1992&d=02&e=21&f=2016&g=d&ignore=.csv"
 OMRU <- read.csv(URL)
 colnames(OMRU) <- paste("OMRU", colnames(OMRU), sep = ".")
