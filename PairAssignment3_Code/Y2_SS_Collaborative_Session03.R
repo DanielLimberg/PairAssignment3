@@ -1,17 +1,19 @@
-# Pair Assignment 3
-# Data 
+# Collaborative Social Sience Data - Pair Assignment 3
+# Data
 
 library(countrycode)
 library(WDI)
 library(plyr)
 library(reshape2)
+library(zoo)
 
 # Set Working Directory
 try(setwd("/Users/Lukas/Documents/Git/PairAssignment3"),silent=TRUE)
 try(setwd("C:/Users/Dani/Documents/GitHub2/PairAssignment3/PairAssignment3_Data"),silent=TRUE)
 getwd()
 
-#get data on natural disasters
+
+# natural disasters
 dis <- read.csv("disaster19912015.csv", header = FALSE, sep = ",", ".", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 
 names(dis)[1] <- 'year'
@@ -69,6 +71,8 @@ aggrtdis$Impact <- NULL
 aggrtdis$Disaster <- (aggrtdis$Drought + aggrtdis$Earthquake + aggrtdis$Epidemic + aggrtdis$Flood + aggrtdis$Landslide + aggrtdis$Storm + aggrtdis$Wildfire)
 rm(dis, disastercc)
 
+
+# main refinancing operation (ECB)
 MRO <- read.csv("MainRefinancingOperations.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 MRO <- MRO[-1,]
 MRO <- MRO[-1,]
@@ -77,8 +81,15 @@ MRO <- MRO[-1,]
 MRO <- MRO[-1,]
 
 names(MRO)[1] <- 'time'
-names(MRO)[2] <- 'MRO'
+names(MRO)[2] <- 'ECB.MRO'
 
+MRO$Date <- as.yearqtr(MRO$time, format = "%Y-%m-%d")
+format(MRO$Date, format = "%y/0%q")
+MRO$Date <- gsub("[^a-zA-Z0-9]","",MRO$Date) #get rid of special characters
+
+
+
+# deposit facility (ECB)
 deposit <- read.csv("DepositFacility.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 deposit <- deposit[-1,]
 deposit <- deposit[-1,]
@@ -87,17 +98,27 @@ deposit <- deposit[-1,]
 deposit <- deposit[-1,]
 
 names(deposit)[1] <- 'time'
-names(deposit)[2] <- 'depofacil'
+names(deposit)[2] <- 'ECB.depofacil'
 
+deposit$Date <- as.yearqtr(deposit$time, format = "%Y-%m-%d")
+format(deposit$Date, format = "%y/0%q")
+MRO$Date <- gsub("[^a-zA-Z0-9]","",MRO$Date) #get rid of special characters
+
+
+# quarterly GDP growth (OECD)
 GDPq <- read.csv("QNA_06042016113157540.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 GDPq <- GDPq[-1,]
+GDPq$GPSA <- 0
+GDPq$GPSA[which(GDPq$V5=="GPSA")] <- 1
+GDPq$GDP <- 0
+GDPq$GDP[which(GDPq$V4=="Gross domestic product - expenditure approach")] <- 1
+GDPq$year <- GDPq$V9
+GDPq$year <- gsub("\\-.*","",GDPq$year)
 
 names(GDPq)[1] <- 'iso3c'
 names(GDPq)[2] <- 'country'
 
 GDPq$V3 <- NULL
-GDPq$V4 <- NULL
-GDPq$V5 <- NULL
 GDPq$V6 <- NULL
 GDPq$V7 <- NULL
 GDPq$V8 <- NULL
@@ -111,14 +132,25 @@ GDPq$V16 <- NULL
 GDPq$V18 <- NULL
 GDPq$V19 <- NULL
 
-names(GDPq)[3] <- 'quarter'
-names(GDPq)[4] <- 'GDPq.gr'
+names(GDPq)[5] <- 'Date'
+GDPq$Date <- gsub("[^a-zA-Z0-9]","",GDPq$Date) #get rid of special characters
+names(GDPq)[6] <- 'GDPq.gr'
 
-consume <- read.csv("QNA_06042016125925095.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+sub <- subset(GDPq, GPSA > 0)
+GPSA <- subset(sub, GDP > 0)
+rm(GDPq, sub)
+
+
+# consumption spending
+consume <- read.csv("QNA_06042016174850637.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 consume <- consume[-1,]
 
 names(consume)[1] <- 'iso3c'
 names(consume)[2] <- 'country'
+consume$type <- 0
+consume$type[which(consume$V4=="Private final consumption expenditure by durability")] <- 1
+consume$computation <- 0
+consume$computation[which(consume$V5=="CQRSA")] <- 1
 
 consume$V3 <- NULL
 consume$V5 <- NULL
@@ -134,22 +166,32 @@ consume$V16 <- NULL
 consume$V18 <- NULL
 consume$V19 <- NULL
 
-names(consume)[3] <- 'consumption.tpe'
-names(consume)[4] <- 'quarter'
-names(consume)[5] <- 'consumption.spending'
+names(consume)[3] <- 'consumption.type'
+names(consume)[4] <- 'Date'
+consume$Date <- gsub("[^a-zA-Z0-9]","",consume$Date) #get rid of special characters
+names(consume)[5] <- 'currency'
+names(consume)[6] <- 'consumption.spending'
 
+sub <- subset(consume,  type > 0)
+prvconsm <- subset(sub, computation > 0)
+rm(consume, sub)
+
+
+# total rate of unemployment (OECD)
 unempl <- read.csv("Unemployment.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 unempl <- unempl[-1,]
 
-names(unempl)[1] <- 'country'
+names(unempl)[1] <- 'iso3c'
 
+unempl$V2 <- NULL
 unempl$V3 <- NULL
 unempl$V4 <- NULL
 unempl$V5 <- NULL
 unempl$V8 <- NULL
 
-names(unempl)[1] <- 'iso3c'
-names(unempl)[2] <- 'country'
+names(unempl)[2] <- 'Date'
+unempl$Date <- gsub("[^a-zA-Z0-9]","",unempl$Date) #get rid of special characters
+names(unempl)[3] <- 'unempl'
 
 
 # Germany
@@ -214,7 +256,7 @@ OMRU$year <- as.numeric(OMRU$year)
 rm(URL)
 
 
-
+#World Bank Development Indicators
 WDI <- WDI(country = "all", indicator = c("CM.MKT.TRAD.GD.ZS", #Stocks traded, total value (% of GDP) (4th column)
                                           "BN.KLT.DINV.CD.ZS", #Foreign direct investment (% of GDP)
                                           "CM.MKT.TRNR", #Stocks traded, turnover ratio (%)
@@ -235,6 +277,11 @@ names(WDI)[6] <- 'sturnover'
 names(WDI)[7] <- 'gdp.pc.gr'
 names(WDI)[8] <- 'gdp.pc'
 
+WDI[1:213, ] #delete non-countries (a.k.a. regions)
+WDI <- WDI[-c(1:213), ]
+
+
+# merge the data sets
 merge1 <- merge(WDI,aggrtdis,by=c("iso2c", "year"), all.x = TRUE) #16 observations too much
 merge2 <- merge(merge1,CAC,by=c("year"), all.x = TRUE)
 merge3 <- merge(merge2,DAX,by=c("year"), all.x = TRUE)
@@ -242,7 +289,24 @@ merge4 <- merge(merge3,FTSE,by=c("year"), all.x = TRUE)
 merge5 <- merge(merge4,IBOV,by=c("year"), all.x = TRUE)
 merge6 <- merge(merge5,NIKKEI,by=c("year"), all.x = TRUE)
 merge7 <- merge(merge6,OMRU,by=c("year"), all.x = TRUE)
-rm(aggrtdis, CAC, DAX, FTSE, IBOV, OMRU, NIKKEI)
+rm(WDI, aggrtdis, CAC, DAX, FTSE, IBOV, OMRU, NIKKEI, merge1, merge2, merge3, merge4, merge5, merge6)
 
-MRO <- read.csv("MainRefinancingOperations.csv", header = FALSE, sep = ",", ".", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+merge7$country.y <- NULL
+names(merge7)[3] <- 'country'
 
+merge8 <- merge(GPSA,merge7,by=c("country", "year"), all.x = TRUE)
+rm(merge7, GPSA)
+
+merge9 <- merge(merge8,unempl,by=c("iso3c", "Date"), all.x = TRUE)
+rm(merge8, unempl)
+
+merge10 <- merge(merge9,prvconsm,by=c("iso3c", "Date"), all.x = TRUE)
+merge10$country.y <- NULL
+names(merge10)[3] <- 'country'
+rm(merge9, prvconsm)
+
+merge11 <- merge(merge10,deposit,by=c("Date"), all.x = TRUE)
+rm(deposit, merge10)
+
+merge12 <- merge(merge11,MRO,by=c("Date"), all.x = TRUE)
+rm(MRO, merge11)
