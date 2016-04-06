@@ -4,6 +4,7 @@
 library(countrycode)
 library(WDI)
 library(plyr)
+library(reshape2)
 
 # Set Working Directory
 try(setwd("/Users/Lukas/Documents/Git/PairAssignment3"),silent=TRUE)
@@ -46,9 +47,6 @@ dis$country[dis$country=="SaintLucia"] <- "Saint Lucia"
 dis$country[dis$country=="SerbiaMontenegro"] <- "Serbia"
 dis$country[dis$country=="VirginIslandUS"] <- "Virgin Island US"
 
-
-
-
 dis$disaster <- gsub("[^a-zA-Z0-9]","",dis$disaster) #get rid of special characters
 dis$occurrence <- as.numeric(dis$occurrence)
 
@@ -70,6 +68,89 @@ aggrtdis$Volcanicactivity <- NULL
 aggrtdis$Impact <- NULL
 aggrtdis$Disaster <- (aggrtdis$Drought + aggrtdis$Earthquake + aggrtdis$Epidemic + aggrtdis$Flood + aggrtdis$Landslide + aggrtdis$Storm + aggrtdis$Wildfire)
 rm(dis, disastercc)
+
+MRO <- read.csv("MainRefinancingOperations.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+MRO <- MRO[-1,]
+MRO <- MRO[-1,]
+MRO <- MRO[-1,]
+MRO <- MRO[-1,]
+MRO <- MRO[-1,]
+
+names(MRO)[1] <- 'time'
+names(MRO)[2] <- 'MRO'
+
+deposit <- read.csv("DepositFacility.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+deposit <- deposit[-1,]
+deposit <- deposit[-1,]
+deposit <- deposit[-1,]
+deposit <- deposit[-1,]
+deposit <- deposit[-1,]
+
+names(deposit)[1] <- 'time'
+names(deposit)[2] <- 'depofacil'
+
+GDPq <- read.csv("QNA_06042016113157540.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+GDPq <- GDPq[-1,]
+
+names(GDPq)[1] <- 'iso3c'
+names(GDPq)[2] <- 'country'
+
+GDPq$V3 <- NULL
+GDPq$V4 <- NULL
+GDPq$V5 <- NULL
+GDPq$V6 <- NULL
+GDPq$V7 <- NULL
+GDPq$V8 <- NULL
+GDPq$V10 <- NULL
+GDPq$V11 <- NULL
+GDPq$V12 <- NULL
+GDPq$V13 <- NULL
+GDPq$V14 <- NULL
+GDPq$V15 <- NULL
+GDPq$V16 <- NULL
+GDPq$V18 <- NULL
+GDPq$V19 <- NULL
+
+names(GDPq)[3] <- 'quarter'
+names(GDPq)[4] <- 'GDPq.gr'
+
+consume <- read.csv("QNA_06042016125925095.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+consume <- consume[-1,]
+
+names(consume)[1] <- 'iso3c'
+names(consume)[2] <- 'country'
+
+consume$V3 <- NULL
+consume$V5 <- NULL
+consume$V6 <- NULL
+consume$V7 <- NULL
+consume$V8 <- NULL
+consume$V10 <- NULL
+consume$V12 <- NULL
+consume$V13 <- NULL
+consume$V14 <- NULL
+consume$V15 <- NULL
+consume$V16 <- NULL
+consume$V18 <- NULL
+consume$V19 <- NULL
+
+names(consume)[3] <- 'consumption.tpe'
+names(consume)[4] <- 'quarter'
+names(consume)[5] <- 'consumption.spending'
+
+unempl <- read.csv("Unemployment.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+unempl <- unempl[-1,]
+
+names(unempl)[1] <- 'country'
+
+unempl$V3 <- NULL
+unempl$V4 <- NULL
+unempl$V5 <- NULL
+unempl$V8 <- NULL
+
+names(unempl)[1] <- 'iso3c'
+names(unempl)[2] <- 'country'
+
 
 # Germany
 URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EGDAXI&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
@@ -162,3 +243,6 @@ merge5 <- merge(merge4,IBOV,by=c("year"), all.x = TRUE)
 merge6 <- merge(merge5,NIKKEI,by=c("year"), all.x = TRUE)
 merge7 <- merge(merge6,OMRU,by=c("year"), all.x = TRUE)
 rm(aggrtdis, CAC, DAX, FTSE, IBOV, OMRU, NIKKEI)
+
+MRO <- read.csv("MainRefinancingOperations.csv", header = FALSE, sep = ",", ".", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+
