@@ -8,7 +8,7 @@ library(reshape2)
 library(zoo)
 
 # Set Working Directory
-try(setwd("/Users/Lukas/Documents/Git/PairAssignment3"),silent=TRUE)
+try(setwd("/Users/Lukas/Documents/Git/PairAssignment3/PairAssignment3_Data"),silent=TRUE)
 try(setwd("C:/Users/Dani/Documents/GitHub2/PairAssignment3/PairAssignment3_Data"),silent=TRUE)
 getwd()
 
@@ -78,7 +78,7 @@ MRO <- MRO[-1,]
 MRO <- MRO[-1,]
 MRO <- MRO[-1,]
 MRO <- MRO[-1,]
-MRO <- MRO[-1,]
+MRO <- MRO[-1,] xdcf
 
 names(MRO)[1] <- 'time'
 names(MRO)[2] <- 'ECB.MRO'
@@ -177,7 +177,7 @@ prvconsm <- subset(sub, computation > 0)
 rm(consume, sub)
 
 
-# total rate of unemployment (OECD)
+# % rate of unemployment (OECD)
 unempl <- read.csv("Unemployment.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 unempl <- unempl[-1,]
 
