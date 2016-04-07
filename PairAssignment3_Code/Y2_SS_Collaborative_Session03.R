@@ -8,7 +8,7 @@ library(reshape2)
 library(zoo)
 
 # Set Working Directory
-try(setwd("/Users/Lukas/Documents/Git/PairAssignment3"),silent=TRUE)
+try(setwd("/Users/Lukas/Documents/Git/PairAssignment3/PairAssignment3_Data"),silent=TRUE)
 try(setwd("C:/Users/Dani/Documents/GitHub2/PairAssignment3/PairAssignment3_Data"),silent=TRUE)
 getwd()
 
