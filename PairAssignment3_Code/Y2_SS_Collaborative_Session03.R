@@ -8,7 +8,7 @@ library(reshape2)
 library(zoo)
 
 # Set Working Directory
-try(setwd("/Users/Lukas/Documents/Git/PairAssignment3/PairAssignment3_Data"),silent=TRUE)
+try(setwd("/Users/Lukas/Documents/Git/PairAssignment3"),silent=TRUE)
 try(setwd("C:/Users/Dani/Documents/GitHub2/PairAssignment3/PairAssignment3_Data"),silent=TRUE)
 getwd()
 
@@ -48,14 +48,18 @@ dis$country[dis$country=="Runion"] <- "Reunion"
 dis$country[dis$country=="SaintLucia"] <- "Saint Lucia"
 dis$country[dis$country=="SerbiaMontenegro"] <- "Serbia"
 dis$country[dis$country=="VirginIslandUS"] <- "Virgin Island US"
+dis$country[dis$country=="CongotheDemocraticRepublicofthe"] <- "Democratic republic of the Congo"
+dis$country[dis$country=="Congothe"] <- "Republic of the Congo"
 
 dis$disaster <- gsub("[^a-zA-Z0-9]","",dis$disaster) #get rid of special characters
 dis$occurrence <- as.numeric(dis$occurrence)
 
 dis <- dis[,c(1,3,2,4)]
 
-dis[794, ]
-dis <- dis[-c(794), ]
+dis[91, ] #delete GermanyFedRep
+dis <- dis[-c(91), ]
+dis[793, ] #delete NetherlandsAntilles
+dis <- dis[-c(793), ]
 
 aggrtdis <- dcast(dis, country + year ~ disaster, sum) #p317 R for Dummies
 disastercc <- aggrtdis$country
@@ -78,15 +82,16 @@ MRO <- MRO[-1,]
 MRO <- MRO[-1,]
 MRO <- MRO[-1,]
 MRO <- MRO[-1,]
-MRO <- MRO[-1,] xdcf
+MRO <- MRO[-1,]
 
 names(MRO)[1] <- 'time'
 names(MRO)[2] <- 'ECB.MRO'
 
+MRO$ECB.MRO <- as.numeric(MRO$ECB.MRO)
+
 MRO$Date <- as.yearqtr(MRO$time, format = "%Y-%m-%d")
 format(MRO$Date, format = "%y/0%q")
 MRO$Date <- gsub("[^a-zA-Z0-9]","",MRO$Date) #get rid of special characters
-
 
 
 # deposit facility (ECB)
@@ -100,9 +105,11 @@ deposit <- deposit[-1,]
 names(deposit)[1] <- 'time'
 names(deposit)[2] <- 'ECB.depofacil'
 
+deposit$ECB.depofacil <- as.numeric(deposit$ECB.depofacil)
+
 deposit$Date <- as.yearqtr(deposit$time, format = "%Y-%m-%d")
 format(deposit$Date, format = "%y/0%q")
-MRO$Date <- gsub("[^a-zA-Z0-9]","",MRO$Date) #get rid of special characters
+deposit$Date <- gsub("[^a-zA-Z0-9]","",deposit$Date) #get rid of special characters
 
 
 # quarterly GDP growth (OECD)
@@ -177,7 +184,7 @@ prvconsm <- subset(sub, computation > 0)
 rm(consume, sub)
 
 
-# % rate of unemployment (OECD)
+# total rate of unemployment (OECD)
 unempl <- read.csv("Unemployment.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 unempl <- unempl[-1,]
 
@@ -262,27 +269,38 @@ WDI <- WDI(country = "all", indicator = c("CM.MKT.TRAD.GD.ZS", #Stocks traded, t
                                           "CM.MKT.TRNR", #Stocks traded, turnover ratio (%)
                                           "NY.GDP.PCAP.KD.ZG", #GDP per capita growth (annual %)
                                           "NEGDIKSTKKD", #Estimated Capital stock (real 2005 US$)
-                                          "NY.GDP.PCAP.KD"), #GDP per capita (constant 2005 US$)
+                                          "NY.GDP.MKTP.KD.ZG"), #GDP growth (annual %)
            start=1991, end=2015)
 
 summary(WDI$CM.MKT.TRAD.GD.ZS) #4339 NA's
 summary(WDI$BN.KLT.DINV.CD.ZS) #5996
 summary(WDI$CM.MKT.TRNR) # 4313 NA's
 summary(WDI$NY.GDP.PCAP.KD.ZG) # 945 NA's
-summary(WDI$NY.GDP.PCAP.KD) # 972 NA's
+summary(WDI$NY.GDP.MKTP.KD.ZG) # 942 NA's
 
 names(WDI)[4] <- 'stocks'
 names(WDI)[5] <- 'fdi'
 names(WDI)[6] <- 'sturnover'
 names(WDI)[7] <- 'gdp.pc.gr'
-names(WDI)[8] <- 'gdp.pc'
+names(WDI)[8] <- 'gdp.gr'
 
 WDI[1:213, ] #delete non-countries (a.k.a. regions)
 WDI <- WDI[-c(1:213), ]
+WDI[1126:1147, ] #delete Cape Verde, it's called Cabo Verde now (both have same iso2c)
+WDI <- WDI[-c(1126:1147), ]
+sub <- subset(WDI, iso2c != "B8")
+sub <- subset(sub, iso2c != "F1")
+sub <- subset(sub, iso2c != "S1")
+sub <- subset(sub, iso2c != "S2")
+sub <- subset(sub, iso2c != "S3")
+sub <- subset(sub, iso2c != "S4")
+sub <- subset(sub, iso2c != "Z4")
+WDI <- subset(sub, iso2c != "Z7")
+rm(sub)
 
 
 # merge the data sets
-merge1 <- merge(WDI,aggrtdis,by=c("iso2c", "year"), all.x = TRUE) #16 observations too much
+merge1 <- merge(WDI,aggrtdis,by=c("iso2c", "year"), all.x = TRUE)
 merge2 <- merge(merge1,CAC,by=c("year"), all.x = TRUE)
 merge3 <- merge(merge2,DAX,by=c("year"), all.x = TRUE)
 merge4 <- merge(merge3,FTSE,by=c("year"), all.x = TRUE)
@@ -305,8 +323,15 @@ merge10$country.y <- NULL
 names(merge10)[3] <- 'country'
 rm(merge9, prvconsm)
 
-merge11 <- merge(merge10,deposit,by=c("Date"), all.x = TRUE)
-rm(deposit, merge10)
+#merge11 <- merge(merge10,deposit,by=c("Date"), all.x = TRUE)
+#rm(deposit, merge10)
 
-merge12 <- merge(merge11,MRO,by=c("Date"), all.x = TRUE)
-rm(MRO, merge11)
+#merge12 <- merge(merge11,MRO,by=c("Date"), all.x = TRUE) #396 observations too much
+#rm(MRO, merge11)
+
+
+# creating percentage changes
+Out <- change(merge12, Var = 'B',
+              type = 'proportion',
+              NewVar = 'PercentChange',
+              slideBy = -2)
