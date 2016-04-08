@@ -191,82 +191,73 @@ unempl$V19 <- NULL
 
 
 # Germany
-URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EGDAXI&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
+URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EGDAXI&d=3&e=8&f=2016&g=d&a=10&b=26&c=1990&ignore=.csv"
 DAX <- read.csv(URL)
 colnames(DAX) <- paste("DAX", colnames(DAX), sep = ".")
-names(DAX)[1] <- 'year'
-DAX$year <- as.character(DAX$year)
-DAX$year <- substring(DAX$year,1,nchar(DAX$year)-6)
-DAX <- ddply(DAX, .(year), function(DAX) c(DAX.Open=mean(DAX$DAX.Open), DAX.High=mean(DAX$DAX.High), DAX.Low=mean(DAX$DAX.Low), DAX.Close=mean(DAX$DAX.Close), DAX.Volume=mean(DAX$DAX.Volume), DAX.Adj.Close=mean(DAX$DAX.Adj.Close)))
-DAX$year <- as.numeric(DAX$year)
+names(DAX)[1] <- 'Day'
+DAX$Date <- as.yearqtr(DAX$Day, format = "%Y-%m-%d")
+format(DAX$Date, format = "%y/0%q")
+DAX$Date <- gsub("[^a-zA-Z0-9]","",DAX$Date) #get rid of special characters
+DAX <- ddply(DAX, .(Date), function(DAX) c(DAX.Open=mean(DAX$DAX.Open), DAX.High=mean(DAX$DAX.High), DAX.Low=mean(DAX$DAX.Low), DAX.Close=mean(DAX$DAX.Close), DAX.Volume=mean(DAX$DAX.Volume), DAX.Adj.Close=mean(DAX$DAX.Adj.Close)))
+
 
 # Japan
-URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EN225&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
+URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EN225&a=00&b=1&c=1991&d=03&e=8&f=2016&g=d&ignore=.csv"
 NIKKEI <- read.csv(URL)
 colnames(NIKKEI) <- paste("NIK", colnames(NIKKEI), sep = ".")
-names(NIKKEI)[1] <- 'year'
-NIKKEI$year <- as.character(NIKKEI$year)
-NIKKEI$year <- substring(NIKKEI$year,1,nchar(NIKKEI$year)-6)
-NIKKEI <- ddply(NIKKEI, .(year), function(NIKKEI) c(NIK.Open=mean(NIKKEI$NIK.Open), NIK.High=mean(NIKKEI$NIK.High), NIK.Low=mean(NIKKEI$NIK.Low), NIK.Close=mean(NIKKEI$NIK.Close), NIK.Volume=mean(NIKKEI$NIK.Volume), NIK.Adj.Close=mean(NIKKEI$NIK.Adj.Close)))
-NIKKEI$year <- as.numeric(NIKKEI$year)
+names(NIKKEI)[1] <- 'Day'
+NIKKEI$Date <- as.yearqtr(NIKKEI$Day, format = "%Y-%m-%d")
+format(NIKKEI$Date, format = "%y/0%q")
+NIKKEI$Date <- gsub("[^a-zA-Z0-9]","",NIKKEI$Date) #get rid of special characters
+NIKKEI <- ddply(NIKKEI, .(Date), function(NIKKEI) c(NIK.Open=mean(NIKKEI$NIK.Open), NIK.High=mean(NIKKEI$NIK.High), NIK.Low=mean(NIKKEI$NIK.Low), NIK.Close=mean(NIKKEI$NIK.Close), NIK.Volume=mean(NIKKEI$NIK.Volume), NIK.Adj.Close=mean(NIKKEI$NIK.Adj.Close)))
 
 # Great Britain
-URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EFTSE&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
+URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EFTSE&a=00&b=1&c=1991&d=03&e=8&f=2016&g=d&ignore=.csv"
 FTSE <- read.csv(URL)
 colnames(FTSE) <- paste("FTSE", colnames(FTSE), sep = ".")
-names(FTSE)[1] <- 'year'
-FTSE$year <- as.character(FTSE$year)
-FTSE$year <- substring(FTSE$year,1,nchar(FTSE$year)-6)
-FTSE <- ddply(FTSE, .(year), function(FTSE) c(FTSE.Open=mean(FTSE$FTSE.Open), FTSE.High=mean(FTSE$FTSE.High), FTSE.Low=mean(FTSE$FTSE.Low), FTSE.Close=mean(FTSE$FTSE.Close), FTSE.Volume=mean(FTSE$FTSE.Volume), FTSE.Adj.Close=mean(FTSE$FTSE.Adj.Close)))
-FTSE$year <- as.numeric(FTSE$year)
+names(FTSE)[1] <- 'Day'
+FTSE$Date <- as.yearqtr(FTSE$Day, format = "%Y-%m-%d")
+format(FTSE$Date, format = "%y/0%q")
+FTSE$Date <- gsub("[^a-zA-Z0-9]","",FTSE$Date) #get rid of special characters
+FTSE <- ddply(FTSE, .(Date), function(FTSE) c(FTSE.Open=mean(FTSE$FTSE.Open), FTSE.High=mean(FTSE$FTSE.High), FTSE.Low=mean(FTSE$FTSE.Low), FTSE.Close=mean(FTSE$FTSE.Close), FTSE.Volume=mean(FTSE$FTSE.Volume), FTSE.Adj.Close=mean(FTSE$FTSE.Adj.Close)))
 
 # France
-URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EFCHI&a=00&b=1&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
+URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EFCHI&a=00&b=1&c=1991&d=03&e=8&f=2016&g=d&ignore=.csv"
 CAC <- read.csv(URL)
 colnames(CAC) <- paste("CAC", colnames(CAC), sep = ".")
-names(CAC)[1] <- 'year'
-CAC$year <- as.character(CAC$year)
-CAC$year <- substring(CAC$year,1,nchar(CAC$year)-6)
-CAC <- ddply(CAC, .(year), function(CAC) c(CAC.Open=mean(CAC$CAC.Open), CAC.High=mean(CAC$CAC.High), CAC.Low=mean(CAC$CAC.Low), CAC.Close=mean(CAC$CAC.Close), CAC.Volume=mean(CAC$CAC.Volume), CAC.Adj.Close=mean(CAC$CAC.Adj.Close)))
-CAC$year <- as.numeric(CAC$year)
+names(CAC)[1] <- 'Day'
+CAC$Date <- as.yearqtr(CAC$Day, format = "%Y-%m-%d")
+format(CAC$Date, format = "%y/0%q")
+CAC$Date <- gsub("[^a-zA-Z0-9]","",CAC$Date) #get rid of special characters
+CAC <- ddply(CAC, .(Date), function(CAC) c(CAC.Open=mean(CAC$CAC.Open), CAC.High=mean(CAC$CAC.High), CAC.Low=mean(CAC$CAC.Low), CAC.Close=mean(CAC$CAC.Close), CAC.Volume=mean(CAC$CAC.Volume), CAC.Adj.Close=mean(CAC$CAC.Adj.Close)))
 
-# Brazil
-URL <- "http://real-chart.finance.yahoo.com/table.csv?s=%5EBVSP&a=00&b=01&c=1991&d=02&e=21&f=2016&g=d&ignore=.csv"
-IBOV <- read.csv(URL)
-colnames(IBOV) <- paste("IBOV", colnames(IBOV), sep = ".")
-names(IBOV)[1] <- 'year'
-IBOV$year <- as.character(IBOV$year)
-IBOV$year <- substring(IBOV$year,1,nchar(IBOV$year)-6)
-IBOV <- ddply(IBOV, .(year), function(IBOV) c(IBOV.Open=mean(IBOV$IBOV.Open), IBOV.High=mean(IBOV$IBOV.High), IBOV.Low=mean(IBOV$IBOV.Low), IBOV.Close=mean(IBOV$IBOV.Close), IBOV.Volume=mean(IBOV$IBOV.Volume), IBOV.Adj.Close=mean(IBOV$IBOV.Adj.Close)))
-IBOV$year <- as.numeric(IBOV$year)
 rm(URL)
 
 
 # merge the data sets
-merge1 <- merge(GPSA,CAC,by=c("year"), all.x = TRUE)
-merge2 <- merge(merge1,DAX,by=c("year"), all.x = TRUE)
-merge3 <- merge(merge2,FTSE,by=c("year"), all.x = TRUE)
-merge4 <- merge(merge3,IBOV,by=c("year"), all.x = TRUE)
-merge5 <- merge(merge4,NIKKEI,by=c("year"), all.x = TRUE)
+merge1 <- merge(GPSA,CAC,by=c("Date"), all.x = TRUE)
+merge2 <- merge(merge1,DAX,by=c("Date"), all.x = TRUE)
+merge3 <- merge(merge2,FTSE,by=c("Date"), all.x = TRUE)
+merge4 <- merge(merge3,NIKKEI,by=c("Date"), all.x = TRUE)
+merge4$country <- NULL
+rm(GPSA, CAC, DAX, FTSE, NIKKEI, merge1, merge2, merge3)
+
+merge5 <- merge(merge4,unempl,by=c("iso3c", "Date"), all.x = TRUE)
 merge5$country <- NULL
-rm(GPSA, CAC, DAX, FTSE, IBOV, NIKKEI, merge1, merge2, merge3, merge4)
+rm(merge4, unempl)
 
-merge6 <- merge(merge5,unempl,by=c("iso3c", "Date"), all.x = TRUE)
+merge6 <- merge(merge5,prvconsm,by=c("iso3c", "Date"), all.x = TRUE)
 merge6$country <- NULL
-rm(merge5, unempl)
+rm(merge5, prvconsm)
 
-merge7 <- merge(merge6,prvconsm,by=c("iso3c", "Date"), all.x = TRUE)
-merge7$country <- NULL
-rm(merge6, prvconsm)
+merge7 <- merge(merge6,wti,by=c("Date"), all.x = TRUE)
+rm(wti, merge6)
 
-merge8 <- merge(merge7,wti,by=c("Date"), all.x = TRUE)
-rm(wti, merge7)
+merge8 <- merge(merge7,brent,by=c("Date"), all.x = TRUE)
+rm(brent, merge7)
 
-merge9 <- merge(merge8,brent,by=c("Date"), all.x = TRUE)
-rm(brent, merge8)
+merge9 <- merge(merge8,aggMRO,by=c("Date"), all.x = TRUE)
+rm(aggMRO, merge8)
 
-merge10 <- merge(merge9,aggMRO,by=c("Date"), all.x = TRUE)
-rm(aggMRO, merge9)
-
-merge11 <- merge(merge10,dep,by=c("Date"), all.x = TRUE)
-rm(dep, merge10)
+merge10 <- merge(merge9,dep,by=c("Date"), all.x = TRUE)
+rm(dep, merge9)

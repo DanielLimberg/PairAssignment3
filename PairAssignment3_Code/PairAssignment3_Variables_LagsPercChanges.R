@@ -16,7 +16,7 @@ source("PairAssignment3_Code/Y2_SS_Collaborative_Session03_b.R")
 
 # creating time lags
 # lag variable by one time period (one quarter year)
-lag <- slide(merge11, Var = 'GDPq.gr', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.GDPq.gr', slideBy = -1,
+lag <- slide(merge10, Var = 'GDPq.gr', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.GDPq.gr', slideBy = -1,
              keepInvalid = FALSE, reminder = TRUE)
 
 # panel data to order data set by country and time
@@ -63,4 +63,4 @@ lag <- slide(lag, Var = 'ECB.dep.change', TimeVar = 'Date', GroupVar = 'iso3c', 
 
 # panel data to order data set by country and time
 panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
-rm(merge11, lag)
+rm(merge10, lag)
