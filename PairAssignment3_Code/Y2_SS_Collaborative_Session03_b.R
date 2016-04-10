@@ -20,6 +20,7 @@ format(brent$Date, format = "%y/0%q")
 brent$Date <- gsub("[^a-zA-Z0-9]","",brent$Date) #get rid of special characters
 brent$V1 <- NULL
 names(brent)[1] <- 'Brent.dollar.change'
+brent$Brent.dollar.change <- as.numeric(brent$Brent.dollar.change)
 
 
 # quarterly oil price change: WTI
@@ -30,6 +31,7 @@ format(wti$Date, format = "%y/0%q")
 wti$Date <- gsub("[^a-zA-Z0-9]","",wti$Date) #get rid of special characters
 wti$V1 <- NULL
 names(wti)[1] <- 'WTI.dollar.change'
+wti$WTI.dollar.change <- as.numeric(wti$WTI.dollar.change)
 
 
 # main refinancing operation (ECB)

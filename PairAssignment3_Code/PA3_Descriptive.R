@@ -1,9 +1,10 @@
 # Descriptive & Inferential Statistics
-
+library(stargazer)
 library(Rmisc)
 library(ggplot2)
 library(magrittr)
 library(grid)
+library(plm)
 
 
 # Set Working Directory
@@ -15,6 +16,8 @@ getwd()
 # Dynamical Link to first R script file
 source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
 
+### Descriptive Statistics ###
+
 # Subset Data
 data <- as.data.frame(panel)
 USA <- subset(data, iso3c == "USA")
@@ -25,8 +28,6 @@ FRA <- subset(data, iso3c == "FRA")
 ALL <- subset(data, iso3c == "JPN" | iso3c == "DEU" | iso3c == "GBR" | iso3c == "FRA" | iso3c == "USA")
 ALL <- ALL[ ,c(1,2,8,14,20,26,2:7,9:13,15:19,21:25,27:41)]
 
-
-ALL::scatterplotMatrix(GDPq.gr)
 
 # Dependent Variable (Equity Prices): Plotting the course over time
 # DEU
@@ -82,11 +83,14 @@ for (i in 3:6) {
 
 # Dependent Variable: loop for St. Dev. 
 for (i in 3:6) {
-  ALL[, i] %>% #Error: could not find function "%>%"
+  ALL[, i] %>% 
     sd() %>%
     paste(names(ALL)[i], ., "\n") %>%
     cat()
 }
+
+# Shorter Version instead of loops
+stargazer(ALL, type = "text", title="Descriptive statistics", digits=1)
 
 # Distribution of Dependent Variables
 par(mfrow=c(2,2))
@@ -177,21 +181,157 @@ p18 <- ggplot(GBR, aes(x = GDPq.gr, y = FTSE.Close)) +
   ylab("FTSE Av. Closing Value")
 multiplot(p15, p16, p17, p18, cols = 2)
 
-# Inferential Statistics
+### Inferential Statistics ###
 
-# Basic Models 
+## Basic Model OLS
 M1 <- lm(DAX.Close ~ GDPq.gr, data = DEU)
 summary(M1)
-# Heteroscedasticity Diagnose
-plot(M1, which = 1) # Basically does the same as correlation matrix above
 M2 <- lm(NIK.Close ~ GDPq.gr, data = JPN)
 summary(M2)
-
 M3 <- lm(CAC.Close ~ GDPq.gr, data = FRA)
 summary(M3)
-
 M4 <- lm(FTSE.Close ~ GDPq.gr, data = GBR)
 summary(M4)
+stargazer(M1, M2, M3, M4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          covariate.labels=c("GDP Growth"))
 
+# Heteroscedasticity Diagnose 
+# Basically does the same as correlation matrix above
+par(mfrow=c(2,2))
+plot(M1, which = 1)
+  title("Germany")
+plot(M2, which = 1)
+  title("Japan")
+plot(M3, which = 1)
+  title("France")
+plot(M4, which = 1)
+  title("Britain")
 
+# Diagnose of non-normality of Errors
+par(mfrow=c(2,2))
+plot(M1, which = 2)
+  title("Germany")
+plot(M2, which = 2)
+  title("Japan")
+plot(M3, which = 2)
+  title("France")
+plot(M4, which = 2)
+  title("Britain")
+  
+## Expanded Model OLS 
+# Germany
+M5 <- lm(DAX.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch, data = DEU)
+summary(M5)
+# Japan (without ECB data)
+M6 <- lm(NIK.Close ~ GDPq.gr + L.unempl + L.cons.spend, data = JPN)
+summary(M6)
+# France 
+M7 <- lm(CAC.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch, data = FRA)
+summary(M7)
+# UK (without ECB data)
+M8 <- lm(FTSE.Close ~ GDPq.gr + L.unempl + L.cons.spend, data = GBR)
+summary(M8)
+stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged"))
+                              
+# Heteroscedasticity Diagnose 
+par(mfrow=c(2,2))
+plot(M5, which = 1)
+title("Germany")
+plot(M6, which = 1)
+title("Japan")
+plot(M7, which = 1)
+title("France")
+plot(M8, which = 1)
+title("Britain")
+
+# Diagnose of non-normality of Errors
+par(mfrow=c(2,2))
+plot(M5, which = 2)
+title("Germany")
+plot(M6, which = 2)
+title("Japan")
+plot(M7, which = 2)
+title("France")
+plot(M8, which = 2)
+title("Britain")
+  
+## Expanded Model Pooled OLS
+panelall <- pdata.frame(ALL, index=c("iso3c", "Date"))
+P1 <- plm(DAX.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = panelall, model = "pooling")
+summary(P1)
+P2 <- plm(NIK.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = panelall, model = "pooling")
+summary(P2)
+P3 <- plm(CAC.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = panelall, model = "pooling")
+summary(P3)
+P4 <- plm(FTSE.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = panelall, model = "pooling")
+summary(P4)
+stargazer(P1, P2, P3, P4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged", "WTI lagged", "Brent lagged"))
+# Confidence Intervals
+confint(P1)
+confint(P2)
+confint(P3)
+confint(P4)
+
+# Heteroscedasticity Diagnose 
+par(mfrow=c(2,2))
+plot(P1, which = 1)
+title("Germany")
+plot(P2, which = 1)
+title("Japan")
+plot(P3, which = 1)
+title("France")
+plot(P4, which = 1)
+title("Britain")
+
+# Diagnose of non-normality of Errors
+par(mfrow=c(2,2))
+plot(P1, which = 2)
+title("Germany")
+plot(P2, which = 2)
+title("Japan")
+plot(P3, which = 2)
+title("France")
+plot(P4, which = 2)
+title("Britain")
+
+## Fixed Effects
+M9 <- plm(DAX.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = panelall, model = "within")
+summary(M9)
+M10 <- plm(NIK.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = panelall, model = "within")
+summary(M10)
+M11 <- plm(CAC.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = panelall, model = "within")
+summary(M11)
+M12 <- plm(FTSE.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = panelall, model = "within")
+summary(M12)
+stargazer(M9, M10, M11, M12, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged", "WTI lagged", "Brent lagged"))
+# Confidence Intervals
+confint(M9)
+confint(M10)
+confint(M11)
+confint(M12)
+
+# Heteroscedasticity Diagnose 
+par(mfrow=c(2,2))
+plot(M9, which = 1)
+title("Germany")
+plot(M10, which = 1)
+title("Japan")
+plot(M11, which = 1)
+title("France")
+plot(M12, which = 1)
+title("Britain")
+
+# Diagnose of non-normality of Errors
+par(mfrow=c(2,2))
+plot(M9, which = 2)
+title("Germany")
+plot(M10, which = 2)
+title("Japan")
+plot(M11, which = 2)
+title("France")
+plot(M12, which = 2)
+title("Britain")
 
