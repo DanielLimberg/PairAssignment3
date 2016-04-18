@@ -235,22 +235,72 @@ CAC <- ddply(CAC, .(Date), function(CAC) c(CAC.Open=mean(CAC$CAC.Open), CAC.High
 
 rm(URL)
 
+USA <- subset(GPSA, iso3c == "USA")
+DEU <- subset(GPSA, iso3c == "DEU")
+GBR <- subset(GPSA, iso3c == "GBR")
+JPN <- subset(GPSA, iso3c == "JPN")
+FRA <- subset(GPSA, iso3c == "FRA")
+names(USA)[6] <- 'USA.GDP'
+names(DEU)[6] <- 'DEU.GDP'
+names(GBR)[6] <- 'GBR.GDP'
+names(JPN)[6] <- 'JPN.GDP'
+names(FRA)[6] <- 'FRA.GDP'
+
+dfs <- list(USA,DEU,GBR,JPN,FRA)
+
+merge0 <- join_all(dfs,by=c("Date"),  type = "full", match = "first")
+
+rm(USA, DEU, GBR, JPN, FRA, GPSA, dfs)
 
 # merge the data sets
-merge1 <- merge(GPSA,CAC,by=c("Date"), all.x = TRUE)
+merge1 <- merge(merge0,CAC,by=c("Date"), all.x = TRUE)
 merge2 <- merge(merge1,DAX,by=c("Date"), all.x = TRUE)
 merge3 <- merge(merge2,FTSE,by=c("Date"), all.x = TRUE)
 merge4 <- merge(merge3,NIKKEI,by=c("Date"), all.x = TRUE)
 merge4$country <- NULL
-rm(GPSA, CAC, DAX, FTSE, NIKKEI, merge1, merge2, merge3)
+rm(CAC, DAX, FTSE, NIKKEI, merge0, merge1, merge2, merge3)
 
-merge5 <- merge(merge4,unempl,by=c("iso3c", "Date"), all.x = TRUE)
+USA <- subset(unempl, iso3c == "USA")
+DEU <- subset(unempl, iso3c == "DEU")
+GBR <- subset(unempl, iso3c == "GBR")
+JPN <- subset(unempl, iso3c == "JPN")
+FRA <- subset(unempl, iso3c == "FRA")
+names(USA)[4] <- 'USA.unempl'
+names(DEU)[4] <- 'DEU.unempl'
+names(GBR)[4] <- 'GBR.unempl'
+names(JPN)[4] <- 'JPN.unempl'
+names(FRA)[4] <- 'FRA.unempl'
+
+dfs <- list(USA,DEU,GBR,JPN,FRA)
+
+unempl2 <- join_all(dfs,by=c("Date"),  type = "full", match = "first")
+
+rm(USA, DEU, GBR, JPN, FRA, GPSA, dfs)
+
+merge5 <- merge(merge4,unempl2,by=c("Date"), all.x = TRUE)
 merge5$country <- NULL
-rm(merge4, unempl)
+rm(merge4, unempl, unempl2)
 
-merge6 <- merge(merge5,prvconsm,by=c("iso3c", "Date"), all.x = TRUE)
+USA <- subset(prvconsm, iso3c == "USA")
+DEU <- subset(prvconsm, iso3c == "DEU")
+GBR <- subset(prvconsm, iso3c == "GBR")
+JPN <- subset(prvconsm, iso3c == "JPN")
+FRA <- subset(prvconsm, iso3c == "FRA")
+names(USA)[4] <- 'USA.prvconsm'
+names(DEU)[4] <- 'DEU.prvconsm'
+names(GBR)[4] <- 'GBR.prvconsm'
+names(JPN)[4] <- 'JPN.prvconsm'
+names(FRA)[4] <- 'FRA.prvconsm'
+
+dfs <- list(USA,DEU,GBR,JPN,FRA)
+
+prvconsm2 <- join_all(dfs,by=c("Date"),  type = "full", match = "first")
+
+rm(USA, DEU, GBR, JPN, FRA, dfs)
+
+merge6 <- merge(merge5,prvconsm2,by=c("Date"), all.x = TRUE)
 merge6$country <- NULL
-rm(merge5, prvconsm)
+rm(merge5, prvconsm, prvconsm2)
 
 merge7 <- merge(merge6,wti,by=c("Date"), all.x = TRUE)
 rm(wti, merge6)
