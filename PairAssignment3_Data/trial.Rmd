@@ -12,7 +12,6 @@ library(Rmisc)
 library(ggplot2)
 library(magrittr)
 library(grid)
-library(plm)
 
 
 # Set Working Directory
@@ -88,7 +87,7 @@ p10 + scale_colour_discrete(name  ="Country", labels=c("Germany", "France", "Bri
 ```
 
 ```{r, echo=FALSE}
-multiplot(p5, p6, p7, p8, p9,p10, cols = 2)
+multiplot(p5, p6, p7, p8, p9, p10, cols = 2)
 ```
 
 # Measures of Central Tendency for Dependent Variables
