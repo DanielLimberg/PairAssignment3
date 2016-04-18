@@ -45,17 +45,17 @@ ALL <- ALL[ ,c(1,2,8,14,20,26,2:7,9:13,15:19,21:25,27:41)]
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
-p1 <- ggplot(data = DEU, aes(x = Date, y = DAX.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("DAX") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "Av. Closing Value")
-p1 + scale_colour_discrete(name  ="Country", labels=c("Germany"))
+p1 <- ggplot(data = DEU, aes(x = Date, y = DAX.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) 
 ### Japan
-p2 <- ggplot(data = JPN, aes(x = Date, y = NIK.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("NIKKEI") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "Av. Closing Value")
-p2 + scale_colour_discrete(name  ="Country", labels=c("Japan"))
+p2 <- ggplot(data = JPN, aes(x = Date, y = NIK.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) 
 ### France
-p3 <- ggplot(data = FRA, aes(x = Date, y = CAC.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("CAC40") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "Av. Closing Value")
-p3 + scale_colour_discrete(name  ="Country", labels=c("France"))
+p3 <- ggplot(data = FRA, aes(x = Date, y = CAC.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) 
 ### Great Britain
-p4 <- ggplot(data = GBR, aes(x = Date, y = FTSE.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("FTSE") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "Av. Closing Value")
-p4 + scale_colour_discrete(name  ="Country", labels=c("Britain"))
+p4 <- ggplot(data = GBR, aes(x = Date, y = FTSE.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) 
 ```
 
 ```{r, echo=FALSE}
@@ -66,26 +66,25 @@ multiplot(p1, p2, p3, p4, cols = 2)
 ## Key Independent Variable: Quarterly GDP growth 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-farben = c("firebrick1", "mediumspringgreen", "deepskyblue2", "chocolate4", "cyan2")
+farben <- c("firebrick1", "mediumspringgreen", "deepskyblue2", "chocolate4", "cyan2")
 ### Germany
-p5 <- ggplot(data = DEU, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "firebrick1")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany") + theme(plot.title = element_text(size=8)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
+p5 <- ggplot(data = DEU, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "firebrick1")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### Japan
-p6 <- ggplot(data = JPN, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "chocolate4")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan") + theme(plot.title = element_text(size=8)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
+p6 <- ggplot(data = JPN, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "chocolate4")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### France
-p7 <- ggplot(data = FRA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "mediumspreinggreen")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France") + theme(plot.title = element_text(size=8)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
+p7 <- ggplot(data = FRA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "mediumspreinggreen")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### Great Britain
-p8 <- ggplot(data = GBR, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "deepskyblue2")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain") + theme(plot.title = element_text(size=8)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
+p8 <- ggplot(data = GBR, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "deepskyblue2")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### USA
-p9 <- ggplot(data = USA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "cyan2")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("USA") + theme(plot.title = element_text(size=8)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
+p9 <- ggplot(data = USA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "cyan2")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("USA") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### All growth rates
-p10 <- ggplot(data = ALL, aes(x = Date, y = GDPq.gr, group = iso3c, color = farben)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=8)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=8))
-p10 + scale_colour_discrete(name  ="Country", labels=c("Germany", "France", "Britain", "Japan", "USA")) + theme(legend.position="none")
+p10 <- ggplot(data = ALL, aes(x = Date, y = GDPq.gr, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("All Countries") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
 ```
 
 ```{r, echo=FALSE}
@@ -93,6 +92,11 @@ multiplot(p5, p6, p7, p8, p9, p10, cols = 2)
 ```
 
 # Measures of Central Tendency for Dependent Variables
+
+```{r, echo=FALSE}
+### N, Mean St. Deviations, Min and Max for all Variables
+stargazer(ALL, type = "text", title="Descriptive statistics", digits=1)
+```
 
 ## Mean
 
@@ -166,28 +170,43 @@ p15 <- ggplot(DEU, aes(x = GDPq.gr, y = DAX.Close)) +
   geom_smooth() +
   ggtitle("Germany") +
   xlab("GDP Growth") +
-  ylab("DAX Av. Closing Value")
+  ylab("DAX Av. Closing Value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+
 ## JPN
 p16 <- ggplot(JPN, aes(x = GDPq.gr, y = NIK.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Japan") +
   xlab("GDP Growth") +
-  ylab("Nikkei Av. Closing Value")
+  ylab("Nikkei Av. Closing Value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+
 ## FRA
 p17 <- ggplot(FRA, aes(x = GDPq.gr, y = CAC.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("France") +
   xlab("GDP Growth") +
-  ylab("CAC Av. Closing Value")
+  ylab("CAC Av. Closing Value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+
 ## GBR
 p18 <- ggplot(GBR, aes(x = GDPq.gr, y = FTSE.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Great Britain") +
   xlab("GDP Growth") +
-  ylab("FTSE Av. Closing Value")
+  ylab("FTSE Av. Closing Value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
 ```
 
 ```{r, echo=FALSE}
