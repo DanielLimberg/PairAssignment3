@@ -13,10 +13,6 @@ getwd()
 # Dynamical Link to first R script file
 source("PairAssignment3_Code/Y2_SS_Collaborative_Session03_b.R")
 
-# define year and Date as numeric
-merge10$year <- as.numeric(merge10$year)
-merge10$Date <- gsub("Q",".",merge10$Date)
-merge10$Date <- as.numeric(merge10$Date)
 
 # creating time lags
 # lag variable by one time period (one quarter year)
@@ -68,3 +64,9 @@ lag <- slide(lag, Var = 'ECB.dep.change', TimeVar = 'Date', GroupVar = 'iso3c', 
 # panel data to order data set by country and time
 panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
 rm(merge10, lag)
+
+# define year and Date as numeric
+panel$year <- as.character(panel$year)
+panel$year <- as.numeric(panel$year)
+panel$Date <- gsub("Q",".",panel$Date)
+panel$Date <- as.numeric(panel$Date)
