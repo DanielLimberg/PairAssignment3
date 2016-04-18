@@ -14,59 +14,27 @@ getwd()
 source("PairAssignment3_Code/Y2_SS_Collaborative_Session03_b.R")
 
 
+merge10$iso3c <- NULL
+merge10$iso3c.x <- NULL
+merge10$iso3c.y <- NULL
+merge10$v4 <- NULL
+merge$v5 <- NULL
+
 # creating time lags
-# lag variable by one time period (one quarter year)
-lag <- slide(merge10, Var = 'GDPq.gr', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.GDPq.gr', slideBy = -1,
-             keepInvalid = FALSE, reminder = TRUE)
+# lag variables by one time period (one quarter year)
 
-# panel data to order data set by country and time
-panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
+var <- c("USA.GDP", "JPN.GDP", "GBR.GDP", "FRA.GDP", "DEU.GDP", "USA.unempl", "JPN.unempl", "GBR.unempl",
+         "FRA.unempl", "DEU.unempl", "USA.prvconsm", "JPN.prvconsm", "GBR.prvconsm", "FRA.prvconsm",
+         "DEU.prvconsm", "WTI.dollar.change", "Brent.dollar.change", "ECB.MRO.change", "ECB.dep.change")
 
-# lag variable by one time period (one quarter year)
-lag <- slide(lag, Var = 'unempl', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.unempl', slideBy = -1,
-             keepInvalid = FALSE, reminder = TRUE)
+for (i in var) {
+  merge10[, paste0("L.", i)] <- DataCombine::shift(merge10[, i], shiftBy = -1)
+}
 
-# panel data to order data set by country and time
-panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
-
-# lag variable by one time period (one quarter year)
-lag <- slide(lag, Var = 'consumption.spending', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.cons.spend', slideBy = -1,
-             keepInvalid = FALSE, reminder = TRUE)
-
-# panel data to order data set by country and time
-panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
-
-# lag variable by one time period (one quarter year)
-lag <- slide(lag, Var = 'Brent.dollar.change', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.Brent', slideBy = -1,
-             keepInvalid = FALSE, reminder = TRUE)
-
-# panel data to order data set by country and time
-panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
-
-# lag variable by one time period (one quarter year)
-lag <- slide(lag, Var = 'WTI.dollar.change', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.WTI', slideBy = -1,
-             keepInvalid = FALSE, reminder = TRUE)
-
-# panel data to order data set by country and time
-panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
-
-# lag variable by one time period (one quarter year)
-lag <- slide(lag, Var = 'ECB.MRO.change', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.ECB.MRO.ch', slideBy = -1,
-             keepInvalid = FALSE, reminder = TRUE)
-
-# panel data to order data set by country and time
-panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
-
-# lag variable by one time period (one quarter year)
-lag <- slide(lag, Var = 'ECB.dep.change', TimeVar = 'Date', GroupVar = 'iso3c', NewVar = 'L.ECB.dep.ch', slideBy = -1,
-             keepInvalid = FALSE, reminder = TRUE)
-
-# panel data to order data set by country and time
-panel <- pdata.frame(lag, index=c("iso3c", "Date")) #setting dataframe to panel data
-rm(merge10, lag)
+rm(i, var)
 
 # define year and Date as numeric
-panel$year <- as.character(panel$year)
-panel$year <- as.numeric(panel$year)
-panel$Date <- gsub("Q",".",panel$Date)
-panel$Date <- as.numeric(panel$Date)
+merge10$year <- as.character(merge10$year)
+merge10$year <- as.numeric(merge10$year)
+merge10$Date <- gsub("Q",".",merge10$Date)
+merge10$Date <- as.numeric(merge10$Date)
