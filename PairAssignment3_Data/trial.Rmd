@@ -37,9 +37,23 @@ ALL <- subset(data, iso3c == "JPN" | iso3c == "DEU" | iso3c == "GBR" | iso3c == 
 ALL <- ALL[ ,c(1,2,8,14,20,26,2:7,9:13,15:19,21:25,27:41)]
 ```
 
+# To Do
+
+Mention Var?
+Control for S&P 500?
+Movement of Global markets?
+Role of market sentiments?
+
 # Introduction
 
+# Research Question and Hypothesis
 
+Are there different levels of significance for the effect of GDP growth on equity prices 
+
+H~0~:
+H~1~:
+
+# Descriptive Statistics
 
 ## Dependent Variable (Equity Prices): Plotting the course over time
 
@@ -91,14 +105,14 @@ p10 <- ggplot(data = ALL, aes(x = Date, y = GDPq.gr, group = iso3c, color = iso3
 multiplot(p5, p6, p7, p8, p9, p10, cols = 2)
 ```
 
-# Measures of Central Tendency for Dependent Variables
+## Measures of Central Tendency for Dependent Variables
 
 ```{r, echo=FALSE}
 ### N, Mean St. Deviations, Min and Max for all Variables
 stargazer(ALL, type = "text", title="Descriptive statistics", digits=1)
 ```
 
-## Mean
+### Mean
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
@@ -109,7 +123,7 @@ for (i in 3:6) {
 }
 ```
 
-## Median
+### Median
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
@@ -120,7 +134,7 @@ for (i in 3:6) {
 }
 ```
 
-## Standard Dev.
+### Standard Dev.
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
@@ -131,7 +145,7 @@ for (i in 3:6) {
 }
 ```
 
-# Distribution of Dependent Variables: Average Closing Values
+## Distribution of Dependent Variables: Average Closing Values
 
 ```{r, echo=FALSE}
 par(mfrow=c(2,2))
@@ -161,7 +175,7 @@ hist(GBR$FTSE.Close,
      ylab = "Frequency")
 ```
 
-# Joint Distributions of DV and Key IV (no lag)
+## Joint Distributions of DV and Key IV (no lag)
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ##DEU
