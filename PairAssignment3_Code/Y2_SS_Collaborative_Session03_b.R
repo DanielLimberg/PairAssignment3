@@ -275,7 +275,7 @@ dfs <- list(USA,DEU,GBR,JPN,FRA)
 
 unempl2 <- join_all(dfs,by=c("Date"),  type = "full", match = "first")
 
-rm(USA, DEU, GBR, JPN, FRA, GPSA, dfs)
+rm(USA, DEU, GBR, JPN, FRA, dfs)
 
 merge5 <- merge(merge4,unempl2,by=c("Date"), all.x = TRUE)
 merge5$country <- NULL
