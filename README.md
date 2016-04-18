@@ -1,5 +1,5 @@
 #Pair Assignment 3: GDP Growth and Equity Prices
-### **Limberg, Daniel & Mueller, Lukas**
+### ***Limberg, Daniel & Mueller, Lukas***
 
 In this repository we provide the pair assignment 3 for the Collaborative Social Science Class at the HSoG: A first draft of our final project. 
 
