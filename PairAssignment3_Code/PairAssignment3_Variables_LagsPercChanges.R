@@ -13,8 +13,10 @@ getwd()
 # Dynamical Link to first R script file
 source("PairAssignment3_Code/Y2_SS_Collaborative_Session03_b.R")
 
-# define year as numeric
+# define year and Date as numeric
 merge10$year <- as.numeric(merge10$year)
+merge10$Date <- gsub("Q",".",merge10$Date)
+merge10$Date <- as.numeric(merge10$Date)
 
 # creating time lags
 # lag variable by one time period (one quarter year)
