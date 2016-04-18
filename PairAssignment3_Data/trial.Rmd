@@ -67,33 +67,27 @@ multiplot(p1, p2, p3, p4, cols = 2)
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
-p5 <- ggplot(data = DEU, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
-+ theme(axis.text=element_text(size=8),
+p5 <- ggplot(data = DEU, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 p5 + scale_colour_discrete(name  ="Country", labels=c("Germany"))
 ### Japan
-p6 <- ggplot(data = JPN, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
-+ theme(axis.text=element_text(size=8),
+p6 <- ggplot(data = JPN, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 p6 + scale_colour_discrete(name  ="Country", labels=c("Japan"))
 ### France
-p7 <- ggplot(data = FRA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
-+ theme(axis.text=element_text(size=8),
+p7 <- ggplot(data = FRA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 p7 + scale_colour_discrete(name  ="Country", labels=c("France"))
 ### Great Britain
-p8 <- ggplot(data = GBR, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
-+ theme(axis.text=element_text(size=8),
+p8 <- ggplot(data = GBR, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 p8 + scale_colour_discrete(name  ="Country", labels=c("Britain"))
 ### USA
-p9 <- ggplot(data = USA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
-+ theme(axis.text=element_text(size=8),
+p9 <- ggplot(data = USA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 p9 + scale_colour_discrete(name  ="Country", labels=c("USA"))
 ### All growth rates
-p10 <- ggplot(data = ALL, aes(x = Date, y = GDPq.gr, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
-+ theme(axis.text=element_text(size=8),
+p10 <- ggplot(data = ALL, aes(x = Date, y = GDPq.gr, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 p10 + scale_colour_discrete(name  ="Country", labels=c("Germany", "France", "Britain", "Japan", "USA"))
 ```
