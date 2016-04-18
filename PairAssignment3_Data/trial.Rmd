@@ -82,7 +82,7 @@ p8 <- ggplot(data = GBR, aes(x = Date, y = GDPq.gr, group, group = iso3c, color 
 p9 <- ggplot(data = USA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("USA") + theme(plot.title = element_text(size=8)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### All growth rates
-p10 <- ggplot(data = ALL, aes(x = Date, y = GDPq.gr, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
+p10 <- ggplot(data = ALL, aes(x = Date, y = GDPq.gr, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=8)) + labs(x = "Quarters", y = "% Change to prev. Quarter") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 p10 + scale_colour_discrete(name  ="Country", labels=c("Germany", "France", "Britain", "Japan", "USA")) + theme(legend.position="none")
 ```
@@ -136,14 +136,14 @@ hist(DEU$DAX.Close,
      breaks = 15,
      xlab = "Average Closing Values",
      ylab = "Frequency")
-hist(JPN$NIK.Close,
-     main="Japan | Nikkei", 
+hist(FRA$CAC.Close,
+     main="France | CAC", 
      col="black", 
      breaks = 15,
      xlab = "Average Closing Values",
      ylab = "Frequency")
-hist(FRA$CAC.Close,
-     main="France | CAC", 
+hist(JPN$NIK.Close,
+     main="Japan | Nikkei", 
      col="black", 
      breaks = 15,
      xlab = "Average Closing Values",
