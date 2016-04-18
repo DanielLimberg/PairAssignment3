@@ -18,7 +18,7 @@ merge10$iso3c <- NULL
 merge10$iso3c.x <- NULL
 merge10$iso3c.y <- NULL
 merge10$v4 <- NULL
-merge$v5 <- NULL
+merge10$v5 <- NULL
 
 # creating time lags
 # lag variables by one time period (one quarter year)
