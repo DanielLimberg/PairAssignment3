@@ -44,76 +44,51 @@ ALL <- ALL[ ,c(1,2,8,14,20,26,2:7,9:13,15:19,21:25,27:41)]
 
 ## Dependent Variable (Equity Prices): Plotting the course over time
 
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
-
-```{r, echo=FALSE}
 p1 <- ggplot(data = DEU, aes(x = Date, y = DAX.Close, group = iso3c, color = iso3c)) + geom_line() + ggtitle("DAX") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "Av. Closing Value")
 p1 + scale_colour_discrete(name  ="Country", labels=c("Germany"))
-```
-
 ### Japan
-
-```{r, echo=FALSE}
 p2 <- ggplot(data = JPN, aes(x = Date, y = NIK.Close, group = iso3c, color = iso3c)) + geom_line() + ggtitle("NIKKEI") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "Av. Closing Value")
 p2 + scale_colour_discrete(name  ="Country", labels=c("Japan"))
-```
-
 ### France
-
-```{r, echo=FALSE}
 p3 <- ggplot(data = FRA, aes(x = Date, y = CAC.Close, group = iso3c, color = iso3c)) + geom_line() + ggtitle("CAC40") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "Av. Closing Value")
 p3 + scale_colour_discrete(name  ="Country", labels=c("France"))
-```
-
 ### Great Britain
-
-```{r, echo=FALSE}
 p4 <- ggplot(data = GBR, aes(x = Date, y = FTSE.Close, group = iso3c, color = iso3c)) + geom_line() + ggtitle("FTSE") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "Av. Closing Value")
 p4 + scale_colour_discrete(name  ="Country", labels=c("Britain"))
 ```
 
+```{r, echo=FALSE}
+multiplot(p1, p2, p3, p4, cols = 2)
+```
+
+
 ## Key Independent Variable: Quarterly GDP growth 
 
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
-
-```{r, echo=FALSE}
 p5 <- ggplot(data = DEU, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
 p5 + scale_colour_discrete(name  ="Country", labels=c("Germany"))
-```
-
 ### Japan
-
-```{r, echo=FALSE}
 p6 <- ggplot(data = JPN, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
 p6 + scale_colour_discrete(name  ="Country", labels=c("Japan"))
-```
-
 ### France
-
-```{r, echo=FALSE}
 p7 <- ggplot(data = FRA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
 p7 + scale_colour_discrete(name  ="Country", labels=c("France"))
-```
-
 ### Great Britain
-
-```{r, echo=FALSE}
 p8 <- ggplot(data = GBR, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
 p8 + scale_colour_discrete(name  ="Country", labels=c("Britain"))
-```
-
 ### USA
-
-```{r, echo=FALSE}
 p9 <- ggplot(data = USA, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
 p9 + scale_colour_discrete(name  ="Country", labels=c("USA"))
-```
-
-### GDP Growth in Comparison
-
-```{r, echo=FALSE}
+### All growth rates
 p10 <- ggplot(data = ALL, aes(x = Date, y = GDPq.gr, group = iso3c, color = iso3c)) + geom_line() + ggtitle("Quarterly GDP growth") + theme(plot.title = element_text(size=9)) + labs(x = "Quarters", y = "% Change to prev. Quarter")
 p10 + scale_colour_discrete(name  ="Country", labels=c("Germany", "France", "Britain", "Japan", "USA"))
+```
+
+```{r, echo=FALSE}
+multiplot(p5, p6, p7, p8, p9,p10, cols = 2)
 ```
 
 # Measures of Central Tendency for Dependent Variables
@@ -265,10 +240,10 @@ plot(M4, which = 2)
 ## Expanded Model: OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-summary(M5 <- lm(DAX.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch, data = DEU))
-summary(M6 <- lm(NIK.Close ~ GDPq.gr + L.unempl + L.cons.spend, data = JPN))
-summary(M7 <- lm(CAC.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch, data = FRA))
-summary(M8 <- lm(FTSE.Close ~ GDPq.gr + L.unempl + L.cons.spend, data = GBR))
+summary(M5 <- lm(DAX.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch + L.WTI + L.Brent, data = DEU))
+summary(M6 <- lm(NIK.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch + L.WTI + L.Brent, data = JPN))
+summary(M7 <- lm(CAC.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch + L.WTI + L.Brent, data = FRA))
+summary(M8 <- lm(FTSE.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch + L.WTI + L.Brent, data = GBR))
 ```
 
 ```{r, echo=FALSE}
