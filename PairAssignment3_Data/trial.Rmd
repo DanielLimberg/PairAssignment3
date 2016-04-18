@@ -22,7 +22,6 @@ getwd()
 
 # Dynamical Link to first R script file
 source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
-
 ```
 
 # To Do
@@ -47,16 +46,16 @@ H~1~:
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
-p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) 
 ### Japan
-p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) 
 ### France
-p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) 
 ### Great Britain
-p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) 
 ```
 
@@ -70,43 +69,40 @@ multiplot(p1, p2, p3, p4, cols = 2)
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 farben <- c("firebrick1", "mediumspringgreen", "deepskyblue2", "chocolate4", "cyan2")
 ### Germany
-p5 <- ggplot(data = merge10, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "firebrick1")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+p5 <- ggplot(data = merge10, aes(x = Date, y = DEU.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### Japan
-p6 <- ggplot(data = merge10, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "chocolate4")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+p6 <- ggplot(data = merge10, aes(x = Date, y = JPN.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### France
-p7 <- ggplot(data = merge10, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "mediumspreinggreen")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+p7 <- ggplot(data = merge10, aes(x = Date, y = FRA.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### Great Britain
-p8 <- ggplot(data = merge10, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "deepskyblue2")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+p8 <- ggplot(data = merge10, aes(x = Date, y = GBR.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ### USA
-p9 <- ggplot(data = merge10, aes(x = Date, y = GDPq.gr, group, group = iso3c, color = "cyan2")) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("USA") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=8)) + theme(legend.position="none")
-### All growth rates
-p10 <- ggplot(data = merge10, aes(x = Date, y = GDPq.gr, group = iso3c, color = iso3c)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("All Countries") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+p9 <- ggplot(data = merge10, aes(x = Date, y = USA.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("USA") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) + theme(legend.position="none")
 ```
 
 ```{r, echo=FALSE}
-multiplot(p5, p6, p7, p8, p9, p10, cols = 2)
+multiplot(p5, p6, p7, p8, p9, cols = 2)
 ```
 
 ## Measures of Central Tendency for Dependent Variables
 
 ```{r, echo=FALSE}
 ### N, Mean St. Deviations, Min and Max for all Variables
-stargazer(ALL, type = "text", title="Descriptive statistics", digits=1)
+stargazer(merge10, type = "text", title="Descriptive statistics", digits=1)
 ```
 
 ### Mean
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
-  ALL[, i] %>% 
+  merge10[, i] %>% 
     mean() %>%
-    paste(names(ALL)[i], ., "\n") %>%
+    paste(names(merge10)[i], ., "\n") %>%
     cat()
 }
 ```
@@ -115,9 +111,9 @@ for (i in 3:6) {
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
-  ALL[, i] %>% 
+  merge10[, i] %>% 
     median() %>%
-    paste(names(ALL)[i], ., "\n") %>%
+    paste(names(merge10)[i], ., "\n") %>%
     cat()
 }
 ```
@@ -126,9 +122,9 @@ for (i in 3:6) {
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
-  ALL[, i] %>% #Error: could not find function "%>%"
+  merge10[, i] %>% #Error: could not find function "%>%"
     sd() %>%
-    paste(names(ALL)[i], ., "\n") %>%
+    paste(names(merge10)[i], ., "\n") %>%
     cat()
 }
 ```
@@ -167,7 +163,7 @@ hist(merge10$FTSE.Close,
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ##DEU
-p15 <- ggplot(merge10, aes(x = GDPq.gr, y = DAX.Close)) + 
+p15 <- ggplot(merge10, aes(x = DEU.GDP, y = DAX.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Germany") +
@@ -178,7 +174,7 @@ p15 <- ggplot(merge10, aes(x = GDPq.gr, y = DAX.Close)) +
   theme(plot.title = element_text(size=10)) 
 
 ## JPN
-p16 <- ggplot(merge10, aes(x = GDPq.gr, y = NIK.Close)) + 
+p16 <- ggplot(merge10, aes(x = JPN.GDP, y = NIK.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Japan") +
@@ -189,7 +185,7 @@ p16 <- ggplot(merge10, aes(x = GDPq.gr, y = NIK.Close)) +
   theme(plot.title = element_text(size=10)) 
 
 ## FRA
-p17 <- ggplot(merge10, aes(x = GDPq.gr, y = CAC.Close)) + 
+p17 <- ggplot(merge10, aes(x = FRA.GDP, y = CAC.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("France") +
@@ -200,7 +196,7 @@ p17 <- ggplot(merge10, aes(x = GDPq.gr, y = CAC.Close)) +
   theme(plot.title = element_text(size=10)) 
 
 ## GBR
-p18 <- ggplot(merge10, aes(x = GDPq.gr, y = FTSE.Close)) + 
+p18 <- ggplot(merge10, aes(x = GBR.GDP, y = FTSE.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Great Britain") +
@@ -220,10 +216,10 @@ multiplot(p15, p16, p17, p18, cols = 2)
 ## Basic Model: OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-summary(M1 <- lm(DAX.Close ~ GDPq.gr, data = merge10))
-summary(M2 <- lm(NIK.Close ~ GDPq.gr, data = merge10))
-summary(M3 <- lm(CAC.Close ~ GDPq.gr, data = merge10))
-summary(M4 <- lm(FTSE.Close ~ GDPq.gr, data = merge10))
+summary(M1 <- lm(DAX.Close ~ DEU.GDP, data = merge10))
+summary(M2 <- lm(NIK.Close ~ JPN.GDP, data = merge10))
+summary(M3 <- lm(CAC.Close ~ FRA.GDP, data = merge10))
+summary(M4 <- lm(FTSE.Close ~ GBR.GDP, data = merge10))
 ```
 
 ```{r, echo=FALSE}
@@ -262,10 +258,10 @@ plot(M4, which = 2)
 ## Expanded Model: OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-summary(M5 <- lm(DAX.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch + L.WTI + L.Brent, data = merge10))
-summary(M6 <- lm(NIK.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch + L.WTI + L.Brent, data = merge10))
-summary(M7 <- lm(CAC.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch + L.WTI + L.Brent, data = merge10))
-summary(M8 <- lm(FTSE.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch + L.WTI + L.Brent, data = merge10))
+summary(M5 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+summary(M6 <- lm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+summary(M7 <- lm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+summary(M8 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
 ```
 
 ```{r, echo=FALSE}
@@ -301,18 +297,18 @@ plot(M8, which = 2)
 title("Britain")
 ```
 
-# Inferential Statistics - Panel Model: Pooled OLS
+# Panel Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-PanelMerge <- pdata.frame(merge10, index=c("iso3c", "Date"))
+PanelMerge <- pdata.frame(merge10)
 
-summary(P1 <- plm(DAX.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = PanelMerge, model = "pooling"))
+summary(P1 <- plm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "pooling"))
 
-summary(P2 <- plm(NIK.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = PanelMerge, model = "pooling"))
+summary(P2 <- plm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "pooling"))
 
-summary(P3 <- plm(CAC.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = PanelMerge, model = "pooling"))
+summary(P3 <- plm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "pooling"))
 
-summary(P4 <- plm(FTSE.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = PanelMerge, model = "pooling"))
+summary(P4 <- plm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "pooling"))
 ```
 
 ```{r, echo=FALSE}
@@ -368,13 +364,13 @@ confint(P4)
 # Inferential Statistics - Panel Model: Fixed Effects
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-M9 <- plm(DAX.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = PanelMerge, model = "within")
+M9 <- plm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "within")
 
-M10 <- plm(NIK.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = PanelMerge, model = "within")
+M10 <- plm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "within")
 
-M11 <- plm(CAC.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = PanelMerge, model = "within")
+M11 <- plm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "within")
 
-M12 <- plm(FTSE.Close ~ GDPq.gr + L.unempl + L.cons.spend + L.ECB.MRO.ch + L.ECB.dep.ch  + L.WTI + L.Brent, data = PanelMerge, model = "within")
+M12 <- plm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "within")
 ```
 
 ```{r, echo=FALSE}
