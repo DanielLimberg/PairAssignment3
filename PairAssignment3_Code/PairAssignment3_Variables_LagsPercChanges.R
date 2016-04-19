@@ -36,3 +36,5 @@ rm(i, var)
 merge10$year <- as.factor(merge10$year)
 merge10$Date <- gsub("Q",".",merge10$Date)
 merge10$Date <- as.numeric(merge10$Date)
+
+merge10 <- merge10[ ,c(1,3,2,4:64)]
