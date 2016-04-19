@@ -26,7 +26,10 @@ source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
 
 # Introduction
 
-Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below.
+In this assignment, we investigate on an odd relation: GDP growth and national equity prices, that is national stock indices. The intuitive assumption that one has is fairly straight forward: The better the economy performs, the higher expectations of market participants, investments and trust in the future. In turn, we expect this to - naturally - increase the level of national stock market indices. 
+[BR]
+However, the more interesting question is beyond this intuitive assumption:
+Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. Note that we do not compare the size of the effects (i.e. compare coefficients) since we investigate on different dependent variables. Rather, we compare the statistical significance across the four countries. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below. For our analysis we focus on the time period between the second quarter of 1999 (where ECB interest rates became relevant) and fourth quarter of 2015. 
 
 # Research Question and Hypothesis
 
@@ -65,6 +68,7 @@ We also control for country-specific covariates.
 * Unemployment (in %)
 * Private Consumption (in % of GDP )
 
+Note that for the descriptive statistics section all graphs apply the full range of our available data (i.e. Q1 1991 until Q4 2015). However, our actual analysis (under the inferential statistics section) only takes into account the time period between Q2 1999 and Q4 2015 since we also control for ECB interest rates. 
 **Figure 1** presents a first glance at the four dependent variables from the first quarter in 1991 to the last quarter in 2015. Striking is the non-linearity of the graphs and the fact that the NIKKEI - quite contrary to the other indices - rather declined/stagnated. The DAX, CAC 40 and the FTSE shows fairly similar developments.  
 
 ## Figure 1: *Dependent Variables (National Stock Indices) over time*
@@ -88,7 +92,7 @@ p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scal
 multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
-The overview we should be interested in is given in **Figure 2**: The development of our key independent variables over the same time (i.e. Q1 1991 until Q4 2015). Note that here we also include the graph for the USA which is an external factor we assume to be influential on all four economies of interest (and in turn on the according national stock indices). Compared to the previous developments of the dependent variables, the key independent variables show a relatively more similar, congruent evolution. Remarkable is the major, well visible downturn in the aftermath of financial crisis in all five graphs.  
+Another overview we should be interested in is given in **Figure 2**: The development of our key independent variables over the same time (i.e. Q1 1991 until Q4 2015). Note that here we also include the graph for the USA which is an external factor we assume to be influential on all four economies of interest (and in turn on the according national stock indices). Compared to the previous developments of the dependent variables, the key independent variables show a relatively more similar, congruent evolution. Remarkable is the major, well visible downturn in the aftermath of financial crisis in all five graphs.  
 
 ## Figure 2: *Key Independent Variables (Quarterly GDP growth)* 
 
@@ -137,7 +141,7 @@ for (i in 3:6) {
 }
 ```
 
-For a next step, **Figure 4** summarizes the frequency distributions of the dependent variables. For now, we assume the variables to be normally distributed. In following research to this assignment we will consider log-transformation for the variables.
+In the next step, **Figure 4** summarizes the frequency distributions of the dependent variables. For now, we assume the variables to be normally distributed. In following research to this assignment we will consider log-transformation for the variables.
 
 ## Figure 4: *Distribution of Dependent Variables: Average Closing Values*
 
@@ -169,7 +173,7 @@ hist(merge10$FTSE.Close,
      ylab = "Frequency")
 ```
 
-Finally, 
+Finally, we obtain the joint distributions between our dependent and key independent variables in **Figure 5**. Remarkable are the trends for a high GDP growth (i.e. over 2%) in the case of Germany and Japan. The intuitive relation between higher GDP growth and a higher level of the index is violated. 
 
 ## Figure 5: *Joint Distributions of DV and Key IV*
 
