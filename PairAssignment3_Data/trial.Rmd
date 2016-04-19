@@ -33,12 +33,14 @@ Role of market sentiments?
 
 # Introduction
 
+Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate whether there are different levels of statistical significance   
+
 # Research Question and Hypothesis
 
-Are there different levels of significance for the effect of GDP growth on equity prices 
+Are there different levels of statistical significance for the effect of a nation's GDP growth on national equity prices?
 
-H~0~:
-H~1~:
+H~0~: There are no differences regarding statistical significance for the effect of a nation's GDP on national equity prices. 
+H~1~: There are differences regarding statistical significance for the effect of a nation's GDP on national equity prices.
 
 # Descriptive Statistics
 
