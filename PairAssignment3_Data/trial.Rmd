@@ -225,10 +225,10 @@ multiplot(p15, p16, p17, p18, cols = 2)
 ## Basic Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-summary(M1 <- lm(DAX.Close ~ DEU.GDP, data = merge10))
-summary(M2 <- lm(NIK.Close ~ JPN.GDP, data = merge10))
-summary(M3 <- lm(CAC.Close ~ FRA.GDP, data = merge10))
-summary(M4 <- lm(FTSE.Close ~ GBR.GDP, data = merge10))
+summary(M1 <- lm(DAX.Close ~ L.DEU.GDP, data = merge10))
+summary(M2 <- lm(NIK.Close ~ L.JPN.GDP, data = merge10))
+summary(M3 <- lm(CAC.Close ~ L.FRA.GDP, data = merge10))
+summary(M4 <- lm(FTSE.Close ~ L.GBR.GDP, data = merge10))
 ```
 
 ```{r, echo=FALSE}
@@ -236,7 +236,7 @@ stargazer(M1, M2, M3, M4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "
           covariate.labels=c("GDP Growth"))
 ```
 
-The above models show us the realtionship between national GDP and the respective stock indices. All coefficient have a positive sign but are statistically insignificant at the 5 per cent level which suggest that there is no effect differnet from zero. Only the coefficient for French GDP growth is significant at the 10 per cent level. The y-intercepts for all four regressions are positive and statistically sgnificant at the 1 per cent level.
+The above models show us the realtionship between national GDP and the respective stock indices. The predictors are lagged by one annual quarter to mitigate potential endogeneity. All coefficient have a positive sign but are statistically insignificant at the 5 per cent level which suggest that there is no effect differnet from zero. Only the coefficient for French GDP growth is significant at the 5 per cent level. The y-intercepts for all four regressions are positive and statistically sgnificant at the 1 per cent level.
 
 ### Heteroscedasticity Diagnose 
 
@@ -273,18 +273,17 @@ The graphs give and idea of the distribution of the error term in the regression
 ## Expanded Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-summary(M5 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+summary(M5 <- lm(DAX.Close ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
   
-summary(M6 <- lm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+summary(M6 <- lm(NIK.Close ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
 
-summary(M7 <- lm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+summary(M7 <- lm(CAC.Close ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
 
-summary(M8 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+summary(M8 <- lm(FTSE.Close ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
 ```
 
 ```{r, echo=FALSE}
-stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
-          covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged"))
+stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
 ```
 
 
@@ -321,18 +320,17 @@ title("Britain")
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 
-summary(P1 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
+summary(P1 <- lm(DAX.Close ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P2 <- lm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
+summary(P2 <- lm(NIK.Close ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P3 <- lm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
+summary(P3 <- lm(CAC.Close ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P4 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
+summary(P4 <- lm(FTSE.Close ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 ```
 
 ```{r, echo=FALSE}
-stargazer(P1, P2, P3, P4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
-          covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged", "WTI lagged", "Brent lagged", "Year"))
+stargazer(P1, P2, P3, P4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
 ```
 
 ## Confidence Intervals
@@ -393,8 +391,7 @@ M12 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.chang
 ```
 
 ```{r, echo=FALSE}
-stargazer(M9, M10, M11, M12, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
-covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged", "WTI lagged", "Brent lagged", "Year", "USA.GDP"))
+stargazer(M9, M10, M11, M12, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
 ```
 
 ## Confidence Intervals
