@@ -407,20 +407,20 @@ confint(P4)
 # Inferential Statistics - US ecomomy
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-M9 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
+M9 <- lm(DAX.Close ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
 
-M10 <- lm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
+M10 <- lm(NIK.Close ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
 
-M11 <- lm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
+M11 <- lm(CAC.Close ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
 
-M12 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
+M12 <- lm(FTSE.Close ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
 ```
 
 ```{r, echo=FALSE}
 stargazer(M9, M10, M11, M12, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
 ```
 
-
+Unemployment for Japan becomes negative and stays statistically insignificant. The effect of unemployment in Japan becomes negative whereas signifcance levels do not change. The WTI coefficient for Japan becomes negative. The coefficient for GDP growth in the USA is statisitcall insignificant and positive. Its effect is negative only for France. The Adj.-R2 is again above 0.9 for all models suggesting that more than 90 per cent of variation in the outcome variable can be explained by the model.
 
 ## Confidence Intervals
 
