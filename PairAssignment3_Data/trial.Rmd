@@ -33,7 +33,9 @@ Role of market sentiments?
 
 # Introduction
 
-Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory variables.       
+Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory variables.
+[Br]
+We take the quarterly GDP growth rate of the USA as a proxy for the world economy. The economy of the USA has a prfound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate and Brent Crude oil price changes are taken as an indicator of global economic health.
 
 # Research Question and Hypothesis
 
@@ -61,14 +63,14 @@ We control for various covariates in our model.
 * ECB Main Refinancing Operations (% change to previous rate)
 * ECB Deposit Facility (% change to previous rate)
 * GDP Growth USA (% change to previous quarter)
-* West Texas Intermediate (WTI)       
-* Brent Crude                         
+* West Texas Intermediate (WTI)
+* Brent Crude
 
-We also control for country-specific covariates. 
+We also control for country-specific covariates.
 
 * GDP Growth (% change to previous quarter)
 * Unemployment
-* Private Consumption 
+* Private Consumption
 
 
 ## Dependent Variable (Equity Prices): Plotting the course over time
@@ -76,16 +78,16 @@ We also control for country-specific covariates.
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
 p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=8)) 
+        axis.title=element_text(size=8))
 ### Japan
 p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=8)) 
+        axis.title=element_text(size=8))
 ### France
 p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=8)) 
+        axis.title=element_text(size=8))
 ### Great Britain
 p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=8)) 
+        axis.title=element_text(size=8))
 ```
 
 ```{r, echo=FALSE}
@@ -125,34 +127,12 @@ multiplot(p5, p6, p7, p8, p9, cols = 2)
 stargazer(merge10, type = "text", title="Descriptive statistics", digits=1)
 ```
 
-### Mean
-
-```{r, echo=FALSE}
-for (i in 3:6) {
-  merge10[, i] %>% 
-    mean() %>%
-    paste(names(merge10)[i], ., "\n") %>%
-    cat()
-}
-```
-
 ### Median
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
   merge10[, i] %>% 
     median() %>%
-    paste(names(merge10)[i], ., "\n") %>%
-    cat()
-}
-```
-
-### Standard Dev.
-
-```{r, echo=FALSE}
-for (i in 3:6) {
-  merge10[, i] %>% #Error: could not find function "%>%"
-    sd() %>%
     paste(names(merge10)[i], ., "\n") %>%
     cat()
 }
@@ -242,7 +222,7 @@ multiplot(p15, p16, p17, p18, cols = 2)
 
 # Inferential Statistics
 
-## Basic Model: OLS
+## Basic Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M1 <- lm(DAX.Close ~ DEU.GDP, data = merge10))
@@ -255,6 +235,8 @@ summary(M4 <- lm(FTSE.Close ~ GBR.GDP, data = merge10))
 stargazer(M1, M2, M3, M4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
           covariate.labels=c("GDP Growth"))
 ```
+
+The above models show us the realtionship between national GDP and the respective stock indices. All coefficient have a positive sign but are statistically insignificant at the 5 per cent level which suggest that there is no effect differnet from zero. Only the coefficient for French GDP growth is significant at the 10 per cent level. The y-intercepts for all four regressions are positive and statistically sgnificant at the 1 per cent level.
 
 ### Heteroscedasticity Diagnose 
 
@@ -270,6 +252,8 @@ plot(M4, which = 1)
   title("Britain")
 ```
 
+Looking at the four graphs we see that the basic models suffer to a certain degree from heteroskedasticity. This stems from outliers which bias the results in the graphs. We conclude that the overall degree of hetereoskedasticity is acceptable since the general relationship seems to be random.
+
 ### Diagnose of non-normality of Errors
 
 ```{r, echo=FALSE}
@@ -284,7 +268,9 @@ plot(M4, which = 2)
   title("Britain")
 ```
 
-## Expanded Model: OLS
+The graphs give and idea of the distribution of the error term in the regression
+
+## Expanded Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M5 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
@@ -329,7 +315,7 @@ plot(M8, which = 2)
 title("Britain")
 ```
 
-# Panel Model: Pooled OLS
+# Expanded Model: Pooled OLS w/ year dummies
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 
