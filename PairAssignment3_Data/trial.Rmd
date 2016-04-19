@@ -27,7 +27,7 @@ source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
 # Introduction
 
 In this assignment, we investigate on an odd relation: GDP growth and national equity prices; that is national stock indices. The intuitive assumption that one has automatically is fairly straight forward: The better the economy performs, the higher expectations of market participants, investments and trust in the future. In turn, we should - naturally - obtain an increase the level of national stock market indices. 
-[BR]
+
 However, the more interesting question is beyond this intuitive assumption:
 Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. Note that we do not compare the size of the effects (i.e. coefficients) since we investigate on different dependent variables. Rather, we compare the statistical significance across the four countries of interest. For equity prices, we take the four major national stock market indices of the countries as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEI (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below. For our analysis we focus on the time period between the second quarter of 1999 (where ECB interest rates became relevant) and fourth quarter of 2015. 
 
@@ -173,7 +173,7 @@ hist(merge10$FTSE.Close,
      ylab = "Frequency")
 ```
 
-Finally, we obtain the joint distributions between our dependent and key independent variables in **Figure 5**. Remarkable are the trends for a high GDP growth (i.e. over 2%) in the case of Germany and Japan. The intuitive relation between higher GDP growth and a higher level of the index is violated. 
+Finally, we obtain the joint distributions between our dependent and key independent variables in **Figure 5**. Remarkable are the trends for a high GDP growth (i.e. over 2%) in the case of Germany and Japan. Here, the intuitive relation between higher GDP growth and a higher level of the index is violated. 
 
 ## Figure 5: *Joint Distributions of DV and Key IV*
 
@@ -243,7 +243,7 @@ stargazer(M1, M2, M3, M4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "
           covariate.labels=c("GDP Growth"))
 ```
 
-The above models show us the realtionship between national GDP and the respective stock indices. The predictors are lagged by one annual quarter to mitigate potential endogeneity. All coefficient have a positive sign but are statistically insignificant at the 5 per cent level which suggest that there is no effect differnet from zero. Only the coefficient for French GDP growth is significant at the 5 per cent level. The y-intercepts for all four regressions are positive and statistically sgnificant at the 1 per cent level.
+The above models show us the realtionship between national GDP and the respective stock indices. The predictors are lagged by one annual quarter to mitigate potential endogeneity. All coefficient have a positive sign but are statistically insignificant at the 5 per cent level which suggest that there is no effect differnet from zero. Only the coefficient for French GDP growth is significant at the 5 per cent level. The y-intercepts for all four regressions are positive and statistically significant at the 1 per cent level.
 
 ### Heteroscedasticity Diagnose 
 
@@ -294,11 +294,11 @@ stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "
 ```
 
 All coefficients of lagged GDP growth exhibit a positive sign suggesting that an increase in an economy's output leads to a better performance at the stock market. The effect of the coefficients, however, is not significantly different from zero. For unemployment the coefficients are negative for Germany and Japan yet only for the former country the effect is statisitcally significant at the 1 per cent level. Unemployment in France and Great Britain seems to improve the respective stock indices. Again, both effects are not statistically significant, thus no substantial effect can be established.
-[Br]
+
 The pattern that coefficients of Germany and Japan have the same sign as compared to France and Great Britain, holds for private consumption too. For Germany and Japan an increase in private consumption decreases stock indices performances. This effect, however, is not statistically significant in both countries. In France and Great Britain signs are positive which suggests that more spending increases the stock market performance of forms relfected in the indices. This effect is only statistically significant for France (at the 5 per cent level).
-[Br]
+
 Non of the coeffcients of the remaining variables are statistically significant. The signs are for all countries positive and only for Brent price changes negative. The exceptions are Great Britain where increasing change of MRO suggests a decreasing effect on the FTSE, and France where an increasing change in the ECB's deposit facility would hurt the CAC40.
-[Br]
+
 The explanatory power of the models as measured by the Adj.-R2 is highest for France and Germany, and gets worse for Great Britain and Japan. 
 
 ## Heteroscedasticity Diagnose
@@ -352,11 +352,11 @@ stargazer(P1, P2, P3, P4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "
 
 Taking into account year dummies, the effects change in sign or signifcance or both. In Germany, unemployment becomes statistically insignificant, whereas consumption becomes significant at the 5 per cent level. In Japan, unemployment becomes a positive sign yet the effect is remains statistically insignificant. For France, GDP growth, unemployment, and consumption become a negative sign. Consumption looses its statisticall significance.
 GDP growth becomes negative for Great Britain too.
-[Br]
+
 The change in MRO becomes now positive for all coefficients and statistically significant for Germany at the 5 per cent level. The change in the deposit facility is negative for Germany and Japan but positive for the other two countries and throughout not statistically signifcant. Increasing percenatage changes in the WTI price suggest a negative effect on the DAX, the CAC and the FTSE. Only the NIKKEI seems to profit. No effect is statistcally significant. For Brent the signs are reversed.
-[Br]
+
 The years have negative effect throughout. Only for Germany and France the year 2007 has a positive effect. For Germany the year effect becomes positive from 2012 onwards.
-[Br]
+
 The Adj.-R2 is higher for all models than previously. All models have a Adj.-R2 above 0.9.
 
 ## Confidence Intervals
