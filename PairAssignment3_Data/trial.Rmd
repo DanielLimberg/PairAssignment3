@@ -33,7 +33,7 @@ Role of market sentiments?
 
 # Introduction
 
-Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate whether there are different levels of statistical significance across   
+Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory variables.       
 
 # Research Question and Hypothesis
 
@@ -43,6 +43,10 @@ H~0~: There are no differences regarding statistical significance for the effect
 H~1~: There are differences regarding statistical significance for the effect of a nation's GDP on national equity prices.
 
 # Descriptive Statistics
+
+## Variables of Interest
+
+
 
 ## Dependent Variable (Equity Prices): Plotting the course over time
 
