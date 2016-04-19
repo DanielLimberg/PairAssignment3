@@ -17,8 +17,8 @@ source("PairAssignment3_Code/Y2_SS_Collaborative_Session03_b.R")
 merge10$iso3c <- NULL
 merge10$iso3c.x <- NULL
 merge10$iso3c.y <- NULL
-merge10$v4 <- NULL
-merge10$v5 <- NULL
+merge10$V4 <- NULL
+merge10$V5 <- NULL
 
 # creating time lags
 # lag variables by one time period (one quarter year)
@@ -34,7 +34,6 @@ for (i in var) {
 rm(i, var)
 
 # define year and Date as numeric
-merge10$year <- as.character(merge10$year)
-merge10$year <- as.numeric(merge10$year)
+merge10$year <- as.factor(merge10$year)
 merge10$Date <- gsub("Q",".",merge10$Date)
 merge10$Date <- as.numeric(merge10$Date)
