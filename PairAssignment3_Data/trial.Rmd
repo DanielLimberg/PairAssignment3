@@ -26,7 +26,7 @@ source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
 
 # Introduction
 
-Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below.
+Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below.
 
 # Research Question and Hypothesis
 
@@ -42,14 +42,14 @@ H~1~: There are differences regarding statistical significance for the effect of
 
 We investigate on four different dependent variables: National stock indices. We obtain data from their average closing values.
 
-**Dependent Variables**   | Official Title                      | Measure
+**Dependent Variables**   | Official Title                      | Scope
  -------------------- | ----------------------------------- | -----------------------
  DAX (Germany)        | Deutscher Aktienindex               | 30 major Companies
  CAC (France)         | Cotation Assisté en Continu 40      | 40 highest Market Caps
  FTSE (Great Britain) | Fin. Times Stock Exchange 100 Index | 100 Companies
  NIKKEI (Japan)       | NIKKEI 225                          | 225 Equities
 
-We control for various covariates in our model. 
+We control for various covariates in our model. We lag all our covariates by one quarter. 
 
 * ECB Main Refinancing Operations (% change to previous rate)
 * ECB Deposit Facility (% change to previous rate)
@@ -115,7 +115,9 @@ p9 <- ggplot(data = merge10, aes(x = Date, y = USA.GDP)) + geom_line() + scale_x
 multiplot(p5, p6, p7, p8, p9, cols = 2)
 ```
 
-## Measures of Central Tendency for Dependent Variables
+**Figure 3** summarizes the main characteristics for the depent and key indepent variables.
+
+## Figure 3: *Measures of Central Tendency for DVs & Key IVs*
 
 ```{r, echo=FALSE}
 ### N, Mean St. Deviations, Min and Max for all Variables
@@ -124,7 +126,7 @@ stargazer(merge10[c("DAX.Close", "CAC.Close", "NIK.Close", "FTSE.Close", "L.DEU.
           title="Descriptive statistics", digits=1)
 ```
 
-### Median
+The according Medians for the each dependent variable are as follows: 
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
@@ -135,7 +137,9 @@ for (i in 3:6) {
 }
 ```
 
-## Distribution of Dependent Variables: Average Closing Values
+For a next step, **Figure 4** summarizes the frequency distributions of the dependent variables. For now, we assume the variables to be normally distributed. In following research to this assignment we will consider log-transformation for the variables.
+
+## Figure 4: *Distribution of Dependent Variables: Average Closing Values*
 
 ```{r, echo=FALSE}
 par(mfrow=c(2,2))
@@ -165,7 +169,9 @@ hist(merge10$FTSE.Close,
      ylab = "Frequency")
 ```
 
-## Joint Distributions of DV and Key IV (lagged)
+Finally, 
+
+## Figure 5: *Joint Distributions of DV and Key IV*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ##DEU
