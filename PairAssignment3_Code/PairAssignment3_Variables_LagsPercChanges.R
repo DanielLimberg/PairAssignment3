@@ -2,7 +2,6 @@
 # Variables
 
 library(DataCombine)
-library(plm)
 
 # Set Working Directory
 try(setwd("/Users/Lukas/Documents/Git/PairAssignment3/"),silent=TRUE)
