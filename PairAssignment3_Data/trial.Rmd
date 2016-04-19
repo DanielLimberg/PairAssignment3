@@ -33,19 +33,42 @@ Role of market sentiments?
 
 # Introduction
 
-Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory variables.       
+Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory variables.       
 
 # Research Question and Hypothesis
 
 Are there different levels of statistical significance for the effect of a nation's GDP growth on national equity prices?
 
 H~0~: There are no differences regarding statistical significance for the effect of a nation's GDP on national equity prices. 
+
 H~1~: There are differences regarding statistical significance for the effect of a nation's GDP on national equity prices.
 
 # Descriptive Statistics
 
 ## Variables of Interest
 
+We investigate on four different dependent variables: National stock indices. We obtain data from their average closing values.
+
+**Dependent Variables**   | Official Title                      | Measure
+ -------------------- | ----------------------------------- | -----------------------
+ DAX (Germany)        | Deutscher Aktienindex               | 30 major Companies
+ CAC (France)         | Cotation Assisté en Continu 40      | 40 highest Market Caps
+ FTSE (Great Britain) | Fin. Times Stock Exchange 100 Index | 100 Companies
+ NIKKEI (Japan)       | NIKKEI 225                          | 225 Equities
+
+We control for various covariates in our model. 
+
+* ECB Main Refinancing Operations (% change to previous rate)
+* ECB Deposit Facility (% change to previous rate)
+* GDP Growth USA (% change to previous quarter)
+* West Texas Intermediate (WTI)       
+* Brent Crude                         
+
+We also control for country-specific covariates. 
+
+* GDP Growth (% change to previous quarter)
+* Unemployment
+* Private Consumption 
 
 
 ## Dependent Variable (Equity Prices): Plotting the course over time
@@ -102,12 +125,34 @@ multiplot(p5, p6, p7, p8, p9, cols = 2)
 stargazer(merge10, type = "text", title="Descriptive statistics", digits=1)
 ```
 
+### Mean
+
+```{r, echo=FALSE}
+for (i in 3:6) {
+  merge10[, i] %>% 
+    mean() %>%
+    paste(names(merge10)[i], ., "\n") %>%
+    cat()
+}
+```
+
 ### Median
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
   merge10[, i] %>% 
     median() %>%
+    paste(names(merge10)[i], ., "\n") %>%
+    cat()
+}
+```
+
+### Standard Dev.
+
+```{r, echo=FALSE}
+for (i in 3:6) {
+  merge10[, i] %>% #Error: could not find function "%>%"
+    sd() %>%
     paste(names(merge10)[i], ., "\n") %>%
     cat()
 }
@@ -197,7 +242,7 @@ multiplot(p15, p16, p17, p18, cols = 2)
 
 # Inferential Statistics
 
-## Basic Model: Pooled OLS
+## Basic Model: OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M1 <- lm(DAX.Close ~ DEU.GDP, data = merge10))
@@ -239,7 +284,7 @@ plot(M4, which = 2)
   title("Britain")
 ```
 
-## Expanded Model: Pooled OLS
+## Expanded Model: OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M5 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
@@ -284,7 +329,7 @@ plot(M8, which = 2)
 title("Britain")
 ```
 
-# Expanded Model: Pooled OLS w/ Year-Dummies
+# Panel Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 
@@ -347,7 +392,7 @@ confint(P4)
 #title("Britain")
 ```
 
-# Expanded Model - Pooled OLS w/ quarterly US GDP
+# Inferential Statistics - US ecomomy
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 M9 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
