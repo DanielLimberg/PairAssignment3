@@ -177,7 +177,7 @@ Finally, we obtain the joint distributions between our dependent and key indepen
 
 ## Figure 5: *Joint Distributions of DV and Key IV*
 
-```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 ##DEU
 p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close)) + 
   geom_point() + 
@@ -223,13 +223,13 @@ p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close)) +
   theme(plot.title = element_text(size=10)) 
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE}
 multiplot(p15, p16, p17, p18, cols = 2)
 ```
 
 # Inferential Statistics
 
-## Basic Model: Pooled OLS
+## Figure 6: *Basic Model: Pooled OLS*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M1 <- lm(DAX.Close ~ L.DEU.GDP, data = merge10))
@@ -277,7 +277,7 @@ plot(M4, which = 2)
 
 The graphs give and idea of the distribution of the error term in the regression. Ideally, the error terms should be normally distributed, and not show a right or left skew. In these graphs, however, we show a cummulative distribution function. That means that we want small residuals in the lower quantiles of the distriution and large residuals in the upper quantiles of the distribution of the error term. Put differently, we'd expect a crosswise line from the lower left bottom to the upper right corner. All four lines sugest such a crosswise pattern indicating the degree of normality of error terms.
 
-## Expanded Model: Pooled OLS
+## Figure 7: *Expanded Model: Pooled OLS*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M5 <- lm(DAX.Close ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
@@ -333,7 +333,7 @@ title("Britain")
 
 The plotted graph suggests that the standardized residuals lie along the crosswise line. The distribution of the error term is not perfectly normal but is deemed acceptable.
 
-# Expanded Model: Pooled OLS w/ year dummies
+# Figure 8: *Expanded Model: Pooled OLS w/ year dummies*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 
