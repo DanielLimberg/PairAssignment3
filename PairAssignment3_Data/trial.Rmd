@@ -259,8 +259,11 @@ plot(M4, which = 2)
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M5 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+  
 summary(M6 <- lm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+
 summary(M7 <- lm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+
 summary(M8 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
 ```
 
@@ -300,20 +303,19 @@ title("Britain")
 # Panel Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-PanelMerge <- pdata.frame(merge10)
 
-summary(P1 <- plm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "pooling"))
+summary(P1 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P2 <- plm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "pooling"))
+summary(P2 <- lm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P3 <- plm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "pooling"))
+summary(P3 <- lm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P4 <- plm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "pooling"))
+summary(P4 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 ```
 
 ```{r, echo=FALSE}
 stargazer(P1, P2, P3, P4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
-          covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged", "WTI lagged", "Brent lagged"))
+          covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged", "WTI lagged", "Brent lagged", "Year"))
 ```
 
 ## Confidence Intervals
@@ -361,21 +363,21 @@ confint(P4)
 #title("Britain")
 ```
 
-# Inferential Statistics - Panel Model: Fixed Effects
+# Inferential Statistics - US ecomomy
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-M9 <- plm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "within")
+M9 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
 
-M10 <- plm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "within")
+M10 <- lm(NIK.Close ~ JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
 
-M11 <- plm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "within")
+M11 <- lm(CAC.Close ~ FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
 
-M12 <- plm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change, data = PanelMerge, model = "within")
+M12 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
 ```
 
 ```{r, echo=FALSE}
 stargazer(M9, M10, M11, M12, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
-covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged", "WTI lagged", "Brent lagged"))
+covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged", "WTI lagged", "Brent lagged", "Year", "USA.GDP"))
 ```
 
 ## Confidence Intervals
