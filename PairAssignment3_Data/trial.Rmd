@@ -33,9 +33,7 @@ Role of market sentiments?
 
 # Introduction
 
-Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory variables.
-[Br]
-We take the quarterly GDP growth rate of the USA as a proxy for the world economy. The economy of the USA has a prfound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate and Brent Crude oil price changes are taken as an indicator of global economic health.
+Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below.
 
 # Research Question and Hypothesis
 
@@ -63,14 +61,16 @@ We control for various covariates in our model.
 * ECB Main Refinancing Operations (% change to previous rate)
 * ECB Deposit Facility (% change to previous rate)
 * GDP Growth USA (% change to previous quarter)
-* West Texas Intermediate (WTI)
-* Brent Crude
+* West Texas Intermediate (WTI) (% change to previous quarter in U.S. $)
+* Brent Crude (% change to previous quarter in U.S. $)
+
+We take the quarterly GDP growth rate of the USA as a proxy for the world economy. The economy of the USA has a prfound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate and Brent Crude oil price changes are taken as an indicator of global economic health.
 
 We also control for country-specific covariates.
 
 * GDP Growth (% change to previous quarter)
-* Unemployment
-* Private Consumption
+* Unemployment (in %)
+* Private Consumption (in % of GDP )
 
 
 ## Dependent Variable (Equity Prices): Plotting the course over time
