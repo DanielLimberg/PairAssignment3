@@ -355,7 +355,9 @@ GDP growth becomes negative for Great Britain too.
 [Br]
 The change in MRO becomes now positive for all coefficients and statistically significant for Germany at the 5 per cent level. The change in the deposit facility is negative for Germany and Japan but positive for the other two countries and throughout not statistically signifcant. Increasing percenatage changes in the WTI price suggest a negative effect on the DAX, the CAC and the FTSE. Only the NIKKEI seems to profit. No effect is statistcally significant. For Brent the signs are reversed.
 [Br]
-The years have negative effect throughout. Only for Germany and France the year 2007 has a positive effect.
+The years have negative effect throughout. Only for Germany and France the year 2007 has a positive effect. For Germany the year effect becomes positive from 2012 onwards.
+[Br]
+The Adj.-R2 is higher for all models than previously. All models have a Adj.-R2 above 0.9.
 
 ## Confidence Intervals
 
@@ -417,6 +419,8 @@ M12 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.chang
 ```{r, echo=FALSE}
 stargazer(M9, M10, M11, M12, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
 ```
+
+
 
 ## Confidence Intervals
 
