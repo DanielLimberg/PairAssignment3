@@ -268,7 +268,7 @@ plot(M4, which = 2)
   title("Britain")
 ```
 
-The graphs give and idea of the distribution of the error term in the regression
+The graphs give and idea of the distribution of the error term in the regression. Ideally, the error terms should be normally distributed, and not show a right or left skew. In these graphs, however, we show a cummulative distribution function. That means that we want small residuals in the lower quantiles of the distriution and large residuals in the upper quantiles of the distribution of the error term. Put differently, we'd expect a crosswise line from the lower left bottom to the upper right corner. All four lines sugest such a crosswise pattern indicating the degree of normality of error terms.
 
 ## Expanded Model: Pooled OLS
 
@@ -286,6 +286,8 @@ summary(M8 <- lm(FTSE.Close ~ GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MR
 stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
           covariate.labels=c("GDP Growth", "Unemployment lagged", "Consumption Spending lagged", "ECB MRO lagged", "ECB Depos. Facility lagged"))
 ```
+
+
 
 ## Heteroscedasticity Diagnose
 
