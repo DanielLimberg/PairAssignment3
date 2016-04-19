@@ -290,7 +290,12 @@ stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "
 ```
 
 All coefficients of lagged GDP growth exhibit a positive sign suggesting that an increase in an economy's output leads to a better performance at the stock market. The effect of the coefficients, however, is not significantly different from zero. For unemployment the coefficients are negative for Germany and Japan yet only for the former country the effect is statisitcally significant at the 1 per cent level. Unemployment in France and Great Britain seems to improve the respective stock indices. Again, both effects are not statistically significant, thus no substantial effect can be established.
-The pattern that coefficients of Germany and Japan have the same sign as compared to France and Great Britain, holds for private consumption too. For Germany and Japan an increase in private consumption decreases stock indices performances. This effect, however, is only statistically significant for Germany.
+[Br]
+The pattern that coefficients of Germany and Japan have the same sign as compared to France and Great Britain, holds for private consumption too. For Germany and Japan an increase in private consumption decreases stock indices performances. This effect, however, is not statistically significant in both countries. In France and Great Britain signs are positive which suggests that more spending increases the stock market performance of forms relfected in the indices. This effect is only statistically significant for France (at the 5 per cent level).
+[Br]
+Non of the coeffcients of the remaining variables are statistically significant. The signs are for all countries positive and only for Brent price changes negative. The exceptions are Great Britain where increasing change of MRO suggests a decreasing effect on the FTSE, and France where an increasing change in the ECB's deposit facility would hurt the CAC40.
+[Br]
+The explanatory power of the models as measured by the Adj.-R2 is highest for France and Germany, and gets worse for Great Britain and Japan. 
 
 ## Heteroscedasticity Diagnose
 
@@ -306,6 +311,8 @@ plot(M8, which = 1)
 title("Britain")
 ```
 
+Again, the graphs do not suggest large problem with heteroskedasticity. Nonetheless, it must be kept in mind that heteroskedasticity potentially biases the coeffcients systematically. A robust standard error might adjust statistical significance levels by increasing the s.e.-values but leaves the bias untouched.
+
 ## Diagnose of non-normality of Errors
 
 ```{r, echo=FALSE}
@@ -319,6 +326,8 @@ title("France")
 plot(M8, which = 2)
 title("Britain")
 ```
+
+The plotted graph suggests that the standardized residuals lie along the crosswise line. The distribution of the error term is not perfectly normal but is deemed acceptable.
 
 # Expanded Model: Pooled OLS w/ year dummies
 
@@ -336,6 +345,11 @@ summary(P4 <- lm(FTSE.Close ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.
 ```{r, echo=FALSE}
 stargazer(P1, P2, P3, P4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
 ```
+
+Taking into account year dummies, the effects change in sign or signifcance or both. In Germany, unemployment becomes statistically insignificant, whereas consumption becomes significant at the 5 per cent level. In Japan, unemployment becomes a positive sign yet the effect is remains statistically insignificant. For France, GDP growth, unemployment, and consumption become a negative sign. Consumption looses its statisticall significance.
+GDP growth becomes negative for Great Britain too.
+[Br]
+The change in MRO becomes now positive for all coefficients and statistically significant for Germany at the 5 per cent level. The change in the deposit facility is negative for 
 
 ## Confidence Intervals
 
