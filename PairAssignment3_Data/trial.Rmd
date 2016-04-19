@@ -349,7 +349,9 @@ stargazer(P1, P2, P3, P4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "
 Taking into account year dummies, the effects change in sign or signifcance or both. In Germany, unemployment becomes statistically insignificant, whereas consumption becomes significant at the 5 per cent level. In Japan, unemployment becomes a positive sign yet the effect is remains statistically insignificant. For France, GDP growth, unemployment, and consumption become a negative sign. Consumption looses its statisticall significance.
 GDP growth becomes negative for Great Britain too.
 [Br]
-The change in MRO becomes now positive for all coefficients and statistically significant for Germany at the 5 per cent level. The change in the deposit facility is negative for 
+The change in MRO becomes now positive for all coefficients and statistically significant for Germany at the 5 per cent level. The change in the deposit facility is negative for Germany and Japan but positive for the other two countries and throughout not statistically signifcant. Increasing percenatage changes in the WTI price suggest a negative effect on the DAX, the CAC and the FTSE. Only the NIKKEI seems to profit. No effect is statistcally significant. For Brent the signs are reversed.
+[Br]
+The years have negative effect throughout. Only for Germany and France the year 2007 has a positive effect.
 
 ## Confidence Intervals
 
