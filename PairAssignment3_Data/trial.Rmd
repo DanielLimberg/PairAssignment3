@@ -24,13 +24,6 @@ getwd()
 source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
 ```
 
-# To Do
-
-Mention Var?
-Control for S&P 500?
-Movement of Global markets?
-Role of market sentiments?
-
 # Introduction
 
 Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. For equity prices, we take the four major national stock market indices of the countries of interest as our dependent variable: The DAX (Germany), CAC (France), FTSE (Great Britain) and the NIKKEi (Japan). We control for a row of other explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below.
@@ -64,7 +57,7 @@ We control for various covariates in our model.
 * West Texas Intermediate (WTI) (% change to previous quarter in U.S. $)
 * Brent Crude (% change to previous quarter in U.S. $)
 
-We take the quarterly GDP growth rate of the USA as a proxy for the world economy. The economy of the USA has a prfound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate and Brent Crude oil price changes are taken as an indicator of global economic health.
+We take the quarterly GDP growth rate of the USA as a proxy for the world economy. The economy of the USA has a profound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate and Brent Crude oil price changes are taken as an indicator of global economic health.
 
 We also control for country-specific covariates.
 
@@ -72,7 +65,7 @@ We also control for country-specific covariates.
 * Unemployment (in %)
 * Private Consumption (in % of GDP )
 
-**Figure 1** presents a first glance at the four dependent variables from the first quarter in 1991 to the last quarter in 2015. Striking is the non-linearity of the graphs and the fact that the NIKKEI - quite contrary to the other indices - rather declined/stagnated. 
+**Figure 1** presents a first glance at the four dependent variables from the first quarter in 1991 to the last quarter in 2015. Striking is the non-linearity of the graphs and the fact that the NIKKEI - quite contrary to the other indices - rather declined/stagnated. The DAX, CAC 40 and the FTSE shows fairly similar developments.  
 
 ## Figure 1: *Dependent Variables (National Stock Indices) over time*
 
@@ -95,6 +88,7 @@ p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scal
 multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
+The overview we should be interested in is given in **Figure 2**: The development of our key independent variables over the same time (i.e. Q1 1991 until Q4 2015). Note that here we also include the graph for the USA which is an external factor we assume to be influential on all four economies of interest (and in turn on the according national stock indices). Compared to the previous developments of the dependent variables, the key independent variables show a relatively more similar, congruent evolution. Remarkable is the major, well visible downturn in the aftermath of financial crisis in all five graphs.  
 
 ## Figure 2: *Key Independent Variables (Quarterly GDP growth)* 
 
@@ -125,7 +119,9 @@ multiplot(p5, p6, p7, p8, p9, cols = 2)
 
 ```{r, echo=FALSE}
 ### N, Mean St. Deviations, Min and Max for all Variables
-stargazer(merge10, type = "text", title="Descriptive statistics", digits=1)
+stargazer(merge10[c("DAX.Close", "CAC.Close", "NIK.Close", "FTSE.Close", "L.DEU.GDP","L.FRA.GDP","L.JPN.GDP", "L.GBR.GDP", "L.USA.GDP")], 
+          type = "text",
+          title="Descriptive statistics", digits=1)
 ```
 
 ### Median
@@ -169,11 +165,11 @@ hist(merge10$FTSE.Close,
      ylab = "Frequency")
 ```
 
-## Joint Distributions of DV and Key IV (no lag)
+## Joint Distributions of DV and Key IV (lagged)
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ##DEU
-p15 <- ggplot(merge10, aes(x = DEU.GDP, y = DAX.Close)) + 
+p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Germany") +
@@ -184,7 +180,7 @@ p15 <- ggplot(merge10, aes(x = DEU.GDP, y = DAX.Close)) +
   theme(plot.title = element_text(size=10)) 
 
 ## JPN
-p16 <- ggplot(merge10, aes(x = JPN.GDP, y = NIK.Close)) + 
+p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Japan") +
@@ -195,7 +191,7 @@ p16 <- ggplot(merge10, aes(x = JPN.GDP, y = NIK.Close)) +
   theme(plot.title = element_text(size=10)) 
 
 ## FRA
-p17 <- ggplot(merge10, aes(x = FRA.GDP, y = CAC.Close)) + 
+p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("France") +
@@ -206,7 +202,7 @@ p17 <- ggplot(merge10, aes(x = FRA.GDP, y = CAC.Close)) +
   theme(plot.title = element_text(size=10)) 
 
 ## GBR
-p18 <- ggplot(merge10, aes(x = GBR.GDP, y = FTSE.Close)) + 
+p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Great Britain") +
