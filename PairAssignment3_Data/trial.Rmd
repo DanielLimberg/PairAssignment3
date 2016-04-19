@@ -72,8 +72,9 @@ We also control for country-specific covariates.
 * Unemployment (in %)
 * Private Consumption (in % of GDP )
 
+**Figure 1** presents a first glance at the four dependent variables from the first quarter in 1991 to the last quarter in 2015. Striking is the non-linearity of the graphs and the fact that the NIKKEI - quite contrary to the other indices - rather declined/stagnated. 
 
-## Dependent Variable (Equity Prices): Plotting the course over time
+## Figure 1: *Dependent Variables (National Stock Indices) over time*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
@@ -95,7 +96,7 @@ multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
 
-## Key Independent Variable: Quarterly GDP growth 
+## Figure 2: *Key Independent Variables (Quarterly GDP growth)* 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 farben <- c("firebrick1", "mediumspringgreen", "deepskyblue2", "chocolate4", "cyan2")
