@@ -98,34 +98,12 @@ multiplot(p5, p6, p7, p8, p9, cols = 2)
 stargazer(merge10, type = "text", title="Descriptive statistics", digits=1)
 ```
 
-### Mean
-
-```{r, echo=FALSE}
-for (i in 3:6) {
-  merge10[, i] %>% 
-    mean() %>%
-    paste(names(merge10)[i], ., "\n") %>%
-    cat()
-}
-```
-
 ### Median
 
 ```{r, echo=FALSE}
 for (i in 3:6) {
   merge10[, i] %>% 
     median() %>%
-    paste(names(merge10)[i], ., "\n") %>%
-    cat()
-}
-```
-
-### Standard Dev.
-
-```{r, echo=FALSE}
-for (i in 3:6) {
-  merge10[, i] %>% #Error: could not find function "%>%"
-    sd() %>%
     paste(names(merge10)[i], ., "\n") %>%
     cat()
 }
@@ -215,7 +193,7 @@ multiplot(p15, p16, p17, p18, cols = 2)
 
 # Inferential Statistics
 
-## Basic Model: OLS
+## Basic Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M1 <- lm(DAX.Close ~ DEU.GDP, data = merge10))
@@ -257,7 +235,7 @@ plot(M4, which = 2)
   title("Britain")
 ```
 
-## Expanded Model: OLS
+## Expanded Model: Pooled OLS
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M5 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
@@ -302,7 +280,7 @@ plot(M8, which = 2)
 title("Britain")
 ```
 
-# Panel Model: Pooled OLS
+# Expanded Model: Pooled OLS w/ Year-Dummies
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 
@@ -365,7 +343,7 @@ confint(P4)
 #title("Britain")
 ```
 
-# Inferential Statistics - US ecomomy
+# Expanded Model - Pooled OLS w/ quarterly US GDP
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 M9 <- lm(DAX.Close ~ DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + USA.GDP, data = merge10)
