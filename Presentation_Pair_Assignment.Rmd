@@ -1,0 +1,63 @@
+---
+title: "Presentation Pair Assignement"
+author: "by Daniel Limberg & Lukas Müller"
+subtitle: "Investing on an Odd Relationship"
+output: beamer_presentation
+---
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+# Descriptive & Inferential Statistics
+library(stargazer)
+library(Rmisc)
+library(ggplot2)
+library(magrittr)
+library(grid)
+library(xtable)
+
+# Set Working Directory
+try(setwd("/Users/Lukas/Documents/Git/PairAssignment3/"),silent=TRUE)
+try(setwd("C:/Users/Dani/Documents/GitHub2/PairAssignment3/"),silent=TRUE)
+getwd()
+
+
+# Dynamical Link to first R script file
+source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
+```
+
+## Overview
+
+* **W**hat are we doing?
+* **W**hy are we interested in it?
+* **W**ow: Results!
+
+## Overview
+
+* **What are we doing?**
+* Why are we interested in it?
+* Wow: Results!
+
+## Investing on Effect of GDP Growth...
+*(ships=GDP Growth!)* ![](/Users/Lukas/Documents/Git/PairAssignment3/port-labor.jpg)
+
+## ...on National Stock Indices.
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+### Germany
+p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### Japan
+p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### France
+p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### Great Britain
+p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+```
+
+```{r, echo=FALSE}
+multiplot(p1, p2, p3, p4, cols = 2)
+```
+
+# Results
