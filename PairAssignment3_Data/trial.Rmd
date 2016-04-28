@@ -241,7 +241,8 @@ summary(M4 <- lm(FTSE.Close ~ L.GBR.GDP, data = merge10))
 
 ```{r, echo=FALSE}
 stargazer(M1, M2, M3, M4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
-          covariate.labels=c("GDP Growth"))
+          covariate.labels=c("GDP Growth",
+          type = "latex")
 ```
 
 The above models show us the realtionship between national GDP and the respective stock indices. The predictors are lagged by one annual quarter to mitigate potential endogeneity. All coefficient have a positive sign but are statistically insignificant at the 5 per cent level which suggest that there is no effect differnet from zero. Only the coefficient for French GDP growth is significant at the 5 per cent level. The y-intercepts for all four regressions are positive and statistically significant at the 1 per cent level.
@@ -432,30 +433,3 @@ confint(M11)
 confint(M12)
 ```
 
-## Heteroscedasticity Diagnose
-
-```{r, echo=FALSE}
-#par(mfrow=c(2,2))
-#plot(M9, which = 1)
-#title("Germany")
-#plot(M10, which = 1)
-#title("Japan")
-#plot(M11, which = 1)
-#title("France")
-#plot(M12, which = 1)
-#title("Britain")
-```
-
-## Diagnose of non-normality of Errors
-
-```{r, echo=FALSE}
-#par(mfrow=c(2,2))
-#plot(M9, which = 2)
-#title("Germany")
-#plot(M10, which = 2)
-#title("Japan")
-#plot(M11, which = 2)
-#title("France")
-#plot(M12, which = 2)
-#title("Britain")
-```
