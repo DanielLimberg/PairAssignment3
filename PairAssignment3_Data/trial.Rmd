@@ -35,9 +35,9 @@ Focusing on four OECD countries (Germany, France, Great Britain and Japan) we in
 
 Are there different levels of statistical significance for the effect of a nation's GDP growth on national equity prices?
 
-H~0~: There are no differences regarding statistical significance for the effect of a nation's GDP on national equity prices. 
+H~0~: There are no statistically significant effects of GDP growth on changes of National Stock Market Indices.
 
-H~1~: There are differences regarding statistical significance for the effect of a nation's GDP on national equity prices.
+H~1~: There are no statistically significant effects of GDP growth on changes of National Stock Market Indices.
 
 # Descriptive Statistics
 
@@ -334,7 +334,23 @@ title("Britain")
 
 The plotted graph suggests that the standardized residuals lie along the crosswise line. The distribution of the error term is not perfectly normal but is deemed acceptable.
 
-# Figure 8: *Expanded Model: Pooled OLS w/ year dummies*
+# Figure 8: *Expanded Model: Pooled OLS w/ new Dependent Variable (% Change tp previous Quarter)
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+summary(M5 <- lm(DAX.Close.change ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+  
+summary(M6 <- lm(NIK.Close.change ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+
+summary(M7 <- lm(CAC.Close.change ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+
+summary(M8 <- lm(FTSE.Close.change ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+```
+
+```{r, echo=FALSE}
+stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
+```
+
+# Figure 9: *Expanded Model: Pooled OLS w/ year dummies*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 
