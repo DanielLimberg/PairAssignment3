@@ -12,7 +12,7 @@ library(Rmisc)
 library(ggplot2)
 library(magrittr)
 library(grid)
-
+library(xtable)
 
 # Set Working Directory
 try(setwd("/Users/Lukas/Documents/Git/PairAssignment3/"),silent=TRUE)
@@ -241,8 +241,7 @@ summary(M4 <- lm(FTSE.Close ~ L.GBR.GDP, data = merge10))
 
 ```{r, echo=FALSE}
 stargazer(M1, M2, M3, M4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
-          covariate.labels=c("GDP Growth",
-          type = "latex")
+          covariate.labels=c("GDP Growth"), align = TRUE)
 ```
 
 The above models show us the realtionship between national GDP and the respective stock indices. The predictors are lagged by one annual quarter to mitigate potential endogeneity. All coefficient have a positive sign but are statistically insignificant at the 5 per cent level which suggest that there is no effect differnet from zero. Only the coefficient for French GDP growth is significant at the 5 per cent level. The y-intercepts for all four regressions are positive and statistically significant at the 1 per cent level.
