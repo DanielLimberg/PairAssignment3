@@ -1,5 +1,5 @@
 ---
-title: "Presentation Pair Assignement"
+title: "Presentation Pair Assignment"
 author: "by Daniel Limberg & Lukas Müller"
 subtitle: "Investing on an Odd Relationship"
 output: beamer_presentation
@@ -24,24 +24,40 @@ getwd()
 source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
 ```
 
-## Overview: The four 'W' to answer
+## Overview: The four 'W's'
 
 * **W**hat are we doing?
 * **W**hy are we interested in it?
-* **W**hat methods and covariates?
+* **W**hich methods and covariates?
 * **W**ow: Results!
 
 ## Overview
 
 * **What are we doing?**
 * Why are we interested in it?
-* What methods and covariates?
+* Which methods and covariates?
 * Wow: Results!
+
+## Research Question and Hypothese
+
+*Are there different levels of statistical significance for the effect of a nation's GDP growth on the growth rates of National Stock Markets Indices?*
+
+* H~1~: There are no statistically significant effects of GDP growth on the growth rates of National Stock Market Indices.
 
 ## Investing on Effect of GDP Growth...
 *(ships=GDP Growth!)* ![](/Users/Lukas/Documents/Git/PairAssignment3/port-labor.jpg)
 
-## ...on the Changes of National Stock Indices.
+## ...on the Growth Rate of four National Stock Indices.
+
+**Dependent Variables** | Scope
+ -------------------- | -----------------------
+ DAX (Germany)        | 30 major Companies
+ CAC (France)         | 40 highest Market Caps
+ FTSE (Great Britain) | 100 Companies
+ NIKKEI (Japan)       | 225 Equities
+
+## The four National Indices 
+(aka the four Dependent Variables)
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 ### Germany
@@ -62,16 +78,6 @@ p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line()
 multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
-## The four National Indices 
-(aka the four Dependent Variables)
-
-**Dependent Variables** | Scope
- -------------------- | -----------------------
- DAX (Germany)        | 30 major Companies
- CAC (France)         | 40 highest Market Caps
- FTSE (Great Britain) | 100 Companies
- NIKKEI (Japan)       | 225 Equities
-
 ## Joint Distribution DVs and key IV
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
@@ -84,7 +90,7 @@ p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close.change)) +
   ylab("DAX Growth Rate in %") +
   theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) +
-  theme(plot.title = element_text(size=10)) 
+  theme(plot.title = element_text(size=14)) 
 
 ## JPN
 p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) + 
@@ -95,7 +101,7 @@ p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) +
   ylab("Nikkei Growth Rate in %") +
   theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) +
-  theme(plot.title = element_text(size=10)) 
+  theme(plot.title = element_text(size=14)) 
 
 ## FRA
 p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close.change)) + 
@@ -106,7 +112,7 @@ p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close.change)) +
   ylab("CAC Growth Rate in %") +
   theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) +
-  theme(plot.title = element_text(size=10)) 
+  theme(plot.title = element_text(size=14)) 
 
 ## GBR
 p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close.change)) + 
@@ -117,7 +123,7 @@ p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close.change)) +
   ylab("FTSE Growth Rate in %") +
   theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) +
-  theme(plot.title = element_text(size=10)) 
+  theme(plot.title = element_text(size=14)) 
 ```
 
 ```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE}
@@ -128,8 +134,18 @@ multiplot(p15, p16, p17, p18, cols = 2)
 
 * What are we doing?
 * **Why are we interested in it?**
-* What methods and covariates?
+* Which methods and covariates?
 * Wow: Results!
+
+## Good Data Quality
+
+* Daily data for all National Stock Market Indices 
+* Easy to aggregate on quarterly basis
+
+## Big Picture
+
+* Are National Stock Markets detached from GDP growth?
+* If they are - are markets too far off from the 'real economy'?
 
 ## Overview
 
@@ -140,14 +156,32 @@ multiplot(p15, p16, p17, p18, cols = 2)
 
 ## Covariates
 
-We (can) add to the kitchen sink if we want.
+* We (can) add to the kitchen sink if we want  
+* All Covariates lagged by one Quarter  
 
-* Covariates
-+ 
+  * Covariates
+      + GDP Growth USA
+      + ECB Main Refinancing Operations
+      + ECB Deposit Facility
+      + West Texas Intermediate (WTI)
+      + Brent Crude
+
+  * Country-Specific Covariates
+      + GDP Growth
+      + Unemployment
+      + Private Consumption
+
+## Methods
+
+* OLS
+* (Interactions?)
+* (use logs?)
 
 ## Overview
 
 * What are we doing?
 * Why are we interested in it?
-* What methods and covariates?
+* Which methods and covariates?
 * **Wow: Results!**
+
+## Results

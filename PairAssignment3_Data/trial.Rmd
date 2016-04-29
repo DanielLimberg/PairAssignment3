@@ -536,3 +536,12 @@ stargazer(AM5, AM6, AM7, AM8,
           no.space = TRUE)
 ```
 
+
+## Discussion of Results
+
+Discussion of results
+When we look at the negative effect of the change in the deposit facility interest rate in the previous quarter on the stock indices growth rate in the current quarter we see that this effect is always statistically significant at least at the 5 percent. When controlling for year effects, the variable “L.ECB.dep.change” loses its statistical significance for Great Britain. Adding US GDP growth rates does not change this relationship. The negative effect stays insignificant for Great Britain and significant for the other countries.
+This seems all the more interesting since the significance of the effect stays for Japan. Great Britain is part of the European Union and one of the Euro Zones most important trading partners therefore, economic interdependencies should be examined and compared between Euro Zone and the two countries. The negative effect suggests that increasing volumes of money held at banks does hurt the stock market, since less money is in circulation which dampens investments.
+The effect for previous quarter GDP growth on current stock indices growth is positive which indicates that upward trending stock markets presuppose a healthy economy. This effect is however only statistically significant for Great Britain. In all other countries results do not indicate whether this effect is statistically different from zero.
+One possible explanation is that in Great Britain the economy consists to a large extent of the financial sector. Thus, revenue flows from this sector are an important indicator of the economic health in general. In the other countries a well performing economy does not necessarily influence the stock market. One example would be Bosch in Germany, one of the world’s largest firms, which is not listed on the stock market. In conclusion though, one has to take results for Great Britain with caution: if GDP and stock market performance of its firms are intertwined then the regression measures a reverse causality or even a tautology. Put differently, both variables could potentially measure the same concept and the lag would be the only variance in the regression.
+
