@@ -24,50 +24,130 @@ getwd()
 source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
 ```
 
-## Overview
+## Overview: The four 'W' to answer
 
 * **W**hat are we doing?
 * **W**hy are we interested in it?
+* **W**hat methods and covariates?
 * **W**ow: Results!
 
 ## Overview
 
 * **What are we doing?**
 * Why are we interested in it?
+* What methods and covariates?
 * Wow: Results!
 
 ## Investing on Effect of GDP Growth...
 *(ships=GDP Growth!)* ![](/Users/Lukas/Documents/Git/PairAssignment3/port-labor.jpg)
 
-## ...on National Stock Indices.
+## ...on the Changes of National Stock Indices.
 
-```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 ### Germany
-p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### Japan
-p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### France
-p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### Great Britain
-p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 multiplot(p1, p2, p3, p4, cols = 2)
+```
+
+## The four National Indices 
+(aka the four Dependent Variables)
+
+**Dependent Variables** | Scope
+ -------------------- | -----------------------
+ DAX (Germany)        | 30 major Companies
+ CAC (France)         | 40 highest Market Caps
+ FTSE (Great Britain) | 100 Companies
+ NIKKEI (Japan)       | 225 Equities
+
+## Joint Distribution DVs and key IV
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
+##DEU
+p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Germany") +
+  xlab("GDP Growth") +
+  ylab("DAX Growth Rate in %") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+
+## JPN
+p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Japan") +
+  xlab("GDP Growth") +
+  ylab("Nikkei Growth Rate in %") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+
+## FRA
+p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("France") +
+  xlab("GDP Growth") +
+  ylab("CAC Growth Rate in %") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+
+## GBR
+p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Great Britain") +
+  xlab("GDP Growth") +
+  ylab("FTSE Growth Rate in %") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+```
+
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE}
+multiplot(p15, p16, p17, p18, cols = 2)
 ```
 
 ## Overview
 
 * What are we doing?
 * **Why are we interested in it?**
+* What methods and covariates?
 * Wow: Results!
 
 ## Overview
 
 * What are we doing?
 * Why are we interested in it?
+* **What methods and covariates?**
+* Wow: Results!
+
+## Covariates
+
+We (can) add to the kitchen sink if we want.
+
+* Covariates
++ 
+
+## Overview
+
+* What are we doing?
+* Why are we interested in it?
+* What methods and covariates?
 * **Wow: Results!**

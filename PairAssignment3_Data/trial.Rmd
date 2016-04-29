@@ -33,11 +33,11 @@ Focusing on four OECD countries (Germany, France, Great Britain and Japan) we in
 
 # Research Question and Hypothesis
 
-Are there different levels of statistical significance for the effect of a nation's GDP growth on national equity prices?
+Are there different levels of statistical significance for the effect of a nation's GDP growth on the growth rates of National Stock Markets Indices?
 
-H~0~: There are no statistically significant effects of GDP growth on changes of National Stock Market Indices.
+H~0~: There are statistically significant effects of GDP growth on the growth rates of National Stock Market Indices.
 
-H~1~: There are no statistically significant effects of GDP growth on changes of National Stock Market Indices.
+H~1~: There are no statistically significant effects of GDP growth on the growth rates of National Stock Market Indices.
 
 # Descriptive Statistics
 
@@ -71,20 +71,20 @@ We also control for country-specific covariates.
 Note that for the descriptive statistics section all graphs apply the full range of our available data (i.e. Q1 1991 until Q4 2015). However, our actual analysis (under the inferential statistics section) only takes into account the time period between Q2 1999 and Q4 2015 since we also control for ECB interest rates. 
 **Figure 1** presents a first glance at the four dependent variables from the first quarter in 1991 to the last quarter in 2015. Striking is the non-linearity of the graphs and the fact that the NIKKEI - quite contrary to the other indices - rather declined/stagnated. The DAX, CAC 40 and the FTSE shows fairly similar developments.  
 
-## Figure 1: *Dependent Variables (National Stock Indices) over time*
+## Figure 1: *Dependent Variables (Change of National Stock Indices) over time*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
-p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### Japan
-p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### France
-p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### Great Britain
-p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ```
 
@@ -92,10 +92,9 @@ p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scal
 multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
-\newpage
 Another overview we should be interested in is given in **Figure 2**: The development of our key independent variables over the same time (i.e. Q1 1991 until Q4 2015). Note that here we also include the graph for the USA which is an external factor we assume to be influential on all four economies of interest (and in turn on the according national stock indices). Compared to the previous developments of the dependent variables, the key independent variables show a relatively more similar, congruent evolution. Remarkable is the major, well visible downturn in the aftermath of financial crisis in all five graphs.  
 
-## Figure 2: *Key Independent Variables (Quarterly GDP growth)* 
+## Figure 2: *Key Independent Variables (Quarterly GDP growth to previous Quarter)* 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 farben <- c("firebrick1", "mediumspringgreen", "deepskyblue2", "chocolate4", "cyan2")
@@ -124,17 +123,19 @@ multiplot(p5, p6, p7, p8, p9, cols = 2)
 
 ## Figure 3: *Measures of Central Tendency for DVs & Key IVs*
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results="asis"}
 ### N, Mean St. Deviations, Min and Max for all Variables
-stargazer(merge10[c("DAX.Close", "CAC.Close", "NIK.Close", "FTSE.Close", "L.DEU.GDP","L.FRA.GDP","L.JPN.GDP", "L.GBR.GDP", "L.USA.GDP")], 
-          type = "text",
-          title="Descriptive statistics", digits=1)
+stargazer(merge10[c("DAX.Close.change", "CAC.Close.change", "NIK.Close.change", "FTSE.Close.change", "L.DEU.GDP","L.FRA.GDP","L.JPN.GDP", "L.GBR.GDP", "L.USA.GDP")], 
+          type = "latex",
+          title = "Descriptive statistics",
+          header = FALSE,
+          digits=1)
 ```
 
 The according Medians for the each dependent variable are as follows: 
 
-```{r, echo=FALSE}
-for (i in 3:6) {
+```{r, echo=FALSE, results="asis"}
+for (i in 65:68) {
   merge10[, i] %>% 
     median() %>%
     paste(names(merge10)[i], ., "\n") %>%
@@ -148,25 +149,25 @@ In the next step, **Figure 4** summarizes the frequency distributions of the dep
 
 ```{r, echo=FALSE}
 par(mfrow=c(2,2))
-hist(merge10$DAX.Close,
+hist(merge10$DAX.Close.change,
      main="Germany | DAX", 
      col="black", 
      breaks = 15,
      xlab = "Average Closing Values",
      ylab = "Frequency")
-hist(merge10$CAC.Close,
+hist(merge10$CAC.Close.change,
      main="France | CAC", 
      col="black", 
      breaks = 15,
      xlab = "Average Closing Values",
      ylab = "Frequency")
-hist(merge10$NIK.Close,
+hist(merge10$NIK.Close.change,
      main="Japan | Nikkei", 
      col="black", 
      breaks = 15,
      xlab = "Average Closing Values",
      ylab = "Frequency")
-hist(merge10$FTSE.Close,
+hist(merge10$FTSE.Close.change,
      main="Great Britain | FTSE", 
      col="black", 
      breaks = 15,
@@ -180,45 +181,45 @@ Finally, we obtain the joint distributions between our dependent and key indepen
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 ##DEU
-p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close)) + 
+p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close.change)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Germany") +
   xlab("GDP Growth") +
-  ylab("DAX Av. Closing Value") +
+  ylab("DAX Growth Rate in %") +
   theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) +
   theme(plot.title = element_text(size=10)) 
 
 ## JPN
-p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close)) + 
+p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Japan") +
   xlab("GDP Growth") +
-  ylab("Nikkei Av. Closing Value") +
+  ylab("Nikkei Growth Rate in %") +
   theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) +
   theme(plot.title = element_text(size=10)) 
 
 ## FRA
-p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close)) + 
+p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close.change)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("France") +
   xlab("GDP Growth") +
-  ylab("CAC Av. Closing Value") +
+  ylab("CAC Growth Rate in %") +
   theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) +
   theme(plot.title = element_text(size=10)) 
 
 ## GBR
-p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close)) + 
+p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close.change)) + 
   geom_point() + 
   geom_smooth() +
   ggtitle("Great Britain") +
   xlab("GDP Growth") +
-  ylab("FTSE Av. Closing Value") +
+  ylab("FTSE Growth Rate in %") +
   theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8)) +
   theme(plot.title = element_text(size=10)) 
@@ -233,15 +234,19 @@ multiplot(p15, p16, p17, p18, cols = 2)
 ## Figure 6: *Basic Model: Pooled OLS*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-summary(M1 <- lm(DAX.Close ~ L.DEU.GDP, data = merge10))
-summary(M2 <- lm(NIK.Close ~ L.JPN.GDP, data = merge10))
-summary(M3 <- lm(CAC.Close ~ L.FRA.GDP, data = merge10))
-summary(M4 <- lm(FTSE.Close ~ L.GBR.GDP, data = merge10))
+summary(M1 <- lm(DAX.Close.change ~ L.DEU.GDP, data = merge10))
+summary(M2 <- lm(NIK.Close.change ~ L.JPN.GDP, data = merge10))
+summary(M3 <- lm(CAC.Close.change ~ L.FRA.GDP, data = merge10))
+summary(M4 <- lm(FTSE.Close.change ~ L.GBR.GDP, data = merge10))
 ```
 
-```{r, echo=FALSE}
-stargazer(M1, M2, M3, M4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
-          covariate.labels=c("GDP Growth"), align = TRUE)
+```{r, echo=FALSE, results="asis"}
+stargazer(M1, M2, M3, M4,
+          type="latex",
+          dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          covariate.labels=c("GDP Growth"),
+          header = FALSE,
+          no.space = TRUE)
 ```
 
 The above models show us the realtionship between national GDP and the respective stock indices. The predictors are lagged by one annual quarter to mitigate potential endogeneity. All coefficient have a positive sign but are statistically insignificant at the 5 per cent level which suggest that there is no effect differnet from zero. Only the coefficient for French GDP growth is significant at the 5 per cent level. The y-intercepts for all four regressions are positive and statistically significant at the 1 per cent level.
@@ -290,8 +295,12 @@ summary(M7 <- lm(CAC.Close ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.M
 summary(M8 <- lm(FTSE.Close ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
 ```
 
-```{r, echo=FALSE}
-stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
+```{r, echo=FALSE, results="asis"}
+stargazer(M5, M6, M7, M8,
+          type="latex",
+          dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          header = FALSE,
+          no.space = TRUE)
 ```
 
 All coefficients of lagged GDP growth exhibit a positive sign suggesting that an increase in an economy's output leads to a better performance at the stock market. The effect of the coefficients, however, is not significantly different from zero. For unemployment the coefficients are negative for Germany and Japan yet only for the former country the effect is statisitcally significant at the 1 per cent level. Unemployment in France and Great Britain seems to improve the respective stock indices. Again, both effects are not statistically significant, thus no substantial effect can be established.
@@ -334,7 +343,7 @@ title("Britain")
 
 The plotted graph suggests that the standardized residuals lie along the crosswise line. The distribution of the error term is not perfectly normal but is deemed acceptable.
 
-# Figure 8: *Expanded Model: Pooled OLS w/ new Dependent Variable (% Change tp previous Quarter)
+# Figure 8: *Expanded Model: Pooled OLS w/ new Dependent Variable (% Change to previous Quarter)
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M5 <- lm(DAX.Close.change ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
@@ -346,25 +355,33 @@ summary(M7 <- lm(CAC.Close.change ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + 
 summary(M8 <- lm(FTSE.Close.change ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
 ```
 
-```{r, echo=FALSE}
-stargazer(M5, M6, M7, M8, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
+```{r, echo=FALSE, results="asis"}
+stargazer(M5, M6, M7, M8,
+          type="latex",
+          dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          header = FALSE,
+          no.space = TRUE)
 ```
 
 # Figure 9: *Expanded Model: Pooled OLS w/ year dummies*
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 
-summary(P1 <- lm(DAX.Close ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
+summary(P1 <- lm(DAX.Close.change ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P2 <- lm(NIK.Close ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
+summary(P2 <- lm(NIK.Close.change ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P3 <- lm(CAC.Close ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
+summary(P3 <- lm(CAC.Close.change ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 
-summary(P4 <- lm(FTSE.Close ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
+summary(P4 <- lm(FTSE.Close.change ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year, data = merge10))
 ```
 
-```{r, echo=FALSE}
-stargazer(P1, P2, P3, P4, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
+```{r, echo=FALSE, results="asis"}
+stargazer(P1, P2, P3, P4,
+          type="latex",
+          dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          header = FALSE,
+          no.space = TRUE)
 ```
 
 Taking into account year dummies, the effects change in sign or signifcance or both. In Germany, unemployment becomes statistically insignificant, whereas consumption becomes significant at the 5 per cent level. In Japan, unemployment becomes a positive sign yet the effect is remains statistically insignificant. For France, GDP growth, unemployment, and consumption become a negative sign. Consumption looses its statisticall significance.
@@ -424,18 +441,44 @@ confint(P4)
 # Inferential Statistics - US ecomomy
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-M9 <- lm(DAX.Close ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
+M9 <- lm(DAX.Close.change ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
 
-M10 <- lm(NIK.Close ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
+M10 <- lm(NIK.Close.change ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
 
-M11 <- lm(CAC.Close ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
+M11 <- lm(CAC.Close.change ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
 
-M12 <- lm(FTSE.Close ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
+M12 <- lm(FTSE.Close.change ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + year + L.USA.GDP, data = merge10)
 ```
 
-```{r, echo=FALSE}
-stargazer(M9, M10, M11, M12, type="text", dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"))
+```{r, echo=FALSE, results="asis"}
+stargazer(M9, M10, M11, M12,
+          type="latex",
+          title = "Expanded Model with US GDP Growth",
+          dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          header = FALSE,
+          no.space = TRUE)
 ```
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+M13 <- lm(DAX.Close.change ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + L.USA.GDP, data = merge10)
+
+M14 <- lm(NIK.Close.change ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + L.USA.GDP, data = merge10)
+
+M15 <- lm(CAC.Close.change ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + L.USA.GDP, data = merge10)
+
+M16 <- lm(FTSE.Close.change ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change  + L.WTI.dollar.change + L.Brent.dollar.change + L.USA.GDP, data = merge10)
+```
+
+```{r, echo=FALSE, results="asis"}
+stargazer(M13, M14, M15, M16,
+          type="latex",
+          title = "Expanded Model with US GDP Growth (without years)",
+          dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          header = FALSE,
+          no.space = TRUE)
+```
+
+
 
 Unemployment for Japan becomes negative and stays statistically insignificant. The effect of unemployment in Japan becomes negative whereas signifcance levels do not change. The WTI coefficient for Japan becomes negative. The coefficient for GDP growth in the USA is statisitcall insignificant and positive. Its effect is negative only for France. The Adj.-R2 is again above 0.9 for all models suggesting that more than 90 per cent of variation in the outcome variable can be explained by the model.
 
@@ -446,5 +489,50 @@ confint(M9)
 confint(M10)
 confint(M11)
 confint(M12)
+```
+
+# Appendix
+
+## Figure X: *Level of Dependent Variables (National Stock Indices) over time*
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+### Germany
+Ap1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### Japan
+Ap2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### France
+Ap3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### Great Britain
+Ap4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+```
+
+```{r, echo=FALSE}
+multiplot(Ap1, Ap2, Ap3, Ap4, cols = 2)
+```
+
+
+
+## Figure X: *Expanded Model: Pooled OLS w/ other Dependent Variable (Levels instead of Change)*
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+summary(AM5 <- lm(DAX.Close ~ L.DEU.GDP + L.DEU.unempl + L.DEU.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+  
+summary(AM6 <- lm(NIK.Close ~ L.JPN.GDP + L.JPN.unempl + L.JPN.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+
+summary(AM7 <- lm(CAC.Close ~ L.FRA.GDP + L.FRA.unempl + L.FRA.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+
+summary(AM8 <- lm(FTSE.Close ~ L.GBR.GDP + L.GBR.unempl + L.GBR.prvconsm + L.ECB.MRO.change + L.ECB.dep.change + L.WTI.dollar.change + L.Brent.dollar.change, data = merge10))
+```
+
+```{r, echo=FALSE, results="asis"}
+stargazer(AM5, AM6, AM7, AM8,
+          type="latex",
+          dep.var.labels=c("DAX","Nikkei", "CAC", "FTSE"),
+          header = FALSE,
+          no.space = TRUE)
 ```
 
