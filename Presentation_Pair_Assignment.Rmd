@@ -1,7 +1,7 @@
 ---
 title: "Presentation Pair Assignment"
 author: "by Daniel Limberg & Lukas Müller"
-subtitle: "Investing on an Odd Relationship"
+subtitle: "GDP Growth and Growth Rates of Stock Market Indices"
 output: beamer_presentation
 ---
 
@@ -26,28 +26,45 @@ source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
 
 ## Overview: The four 'W's'
 
-* **W**hat are we doing?
 * **W**hy are we interested in it?
+* **W**hat are we doing?
 * **W**hich methods and covariates?
-* **W**ow: Results!
+* **W**ow: Key Results!
 
 ## Overview
 
-* **What are we doing?**
-* Why are we interested in it?
+* **Why are we interested in it?**
+* What are we doing?
 * Which methods and covariates?
-* Wow: Results!
+* Wow: Key Results!
+
+## Interest
+
+* Original idea:
+    + Financial Sector builds on the Real Economy
+    + Companies refinance through issuing stocks (i.e. equity)
+    + If companies perform well: Rewarded with easier refinancing 
+* If original idea fails:
+    + Market failure
+    + Companies may find it hard to refinance - although they perform well
+    + (Due to speculation?)
+
+That is why we ask: *Are National Stock Markets detached from GDP growth?*
+
+## Overview
+
+* Why are we interested in it?
+* **What are we doing?**
+* Which methods and covariates?
+* Wow: Key Results!
 
 ## Research Question and Hypothese
 
-*Are there different levels of statistical significance for the effect of a nation's GDP growth on the growth rates of National Stock Markets Indices?*
+*Does national GDP growth lead to growing national stock market indices?*
 
-* H~1~: There are no statistically significant effects of GDP growth on the growth rates of National Stock Market Indices.
+* H~1~: There are no statistically significant effects of national GDP growth on the growth rates of national stock market indices.
 
-## Investing on Effect of GDP Growth...
-*(ships=GDP Growth!)* ![](/Users/Lukas/Documents/Git/PairAssignment3/port-labor.jpg)
-
-## ...on the Growth Rate of four National Stock Indices.
+## Four Dependent Variables
 
 **Dependent Variables** | Scope
  -------------------- | -----------------------
@@ -57,22 +74,22 @@ source("PairAssignment3_Code/PairAssignment3_Variables_LagsPercChanges.R")
  NIKKEI (Japan)       | 225 Equities
 
 * Timeframe: 1999 Q2 - 2015 Q4
+* Data: Yahoo Finance, OECD, ECB 
 
-## The four National Indices 
-(aka the four Dependent Variables)
+## Four Dependent Variables
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 ### Germany
-p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "% change of Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### Japan
-p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "% change of Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### France
-p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "% change of Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ### Great Britain
-p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "Av. Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE") + theme(plot.title = element_text(size=14)) + labs(x = "Quarters", y = "% change of Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
         axis.title=element_text(size=8))
 ```
 
@@ -80,7 +97,7 @@ p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line()
 multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
-## Joint Distribution DVs and key IV
+## Joint Distribution DVs and National GDP Growth
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 ##DEU
@@ -134,31 +151,13 @@ multiplot(p15, p16, p17, p18, cols = 2)
 
 ## Overview
 
-* What are we doing?
-* **Why are we interested in it?**
-* Which methods and covariates?
-* Wow: Results!
-
-## Good Data Quality
-
-* Daily data for all National Stock Market Indices 
-* Easy to aggregate on quarterly basis
-
-## Big Picture
-
-* Are National Stock Markets detached from GDP growth?
-* If they are - are markets too far off from the 'real economy'?
-
-## Overview
-
-* What are we doing?
 * Why are we interested in it?
+* What are we doing?
 * **What methods and covariates?**
-* Wow: Results!
+* Wow: Key Results!
 
 ## Covariates
 
-* We (can) add to the kitchen sink if we want  
 * All Covariates lagged by one Quarter  
 
   * Covariates
@@ -175,26 +174,31 @@ multiplot(p15, p16, p17, p18, cols = 2)
 
 ## Methods
 
-* OLS
+* OLS for time-series
+* Four Models for four Dependent Variables
 * (Interactions?)
-* (use logs?)
 
 ## Overview
 
 * What are we doing?
 * Why are we interested in it?
 * Which methods and covariates?
-* **Wow: Results!**
+* **Wow: Key Results!**
 
-## Results
+## Key Results
 
 * Deposit Facility: Always negative and st. significant (p<0.05)
     + Higher interest rate makes it more profitable for banks to store their money at ECB
-* GDP Growth: Only st. significant for France (6.9) and GBR (3.5)
+
+## Key Results
+
+* GDP Growth: Only st. significant for France and GBR
     + Possible explanation: France and GBR capital markets based system
     + Japan and Germany with bank based system
-    
-## Results
+
+![](/Users/Lukas/Documents/Git/PairAssignment3/friends.png)
+
+## Key Results
 
 * H~1~: There are no statistically significant effects of GDP growth on the growth rates of National Stock Market Indices.
     + Falsified for France and GBR
