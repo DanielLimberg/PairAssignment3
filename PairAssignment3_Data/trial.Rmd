@@ -55,6 +55,13 @@ We investigate on four different dependent variables: The National stock indices
 
 We control for various covariates in our model. We lag all our covariates by one quarter. 
 
+| **Covariates**       | Measure                             |
+|----------------------|-------------------------------------|
+| ECB deposit facility | % change to previous rate           |
+| GDP growth USA       | % change to previous rate           |           
+| WTI                  | % change to previous rate in U.S. $ |  
+
+
 * ECB Main Refinancing Operations (% change to previous rate)
 * ECB Deposit Facility (% change to previous rate)
 * GDP Growth USA (% change to previous quarter)
@@ -90,7 +97,7 @@ p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line()
 ```
 
 ```{r, echo=FALSE}
-multiplot(p1, p2, p3, p4, cols = 2)
+multiplot(p3, p1, p4, p2, cols = 2)
 ```
 
 Another overview we should be interested in is given in **Figure 2**: The development of our key independent variables over the same time (i.e. Q1 1991 until Q4 2015). Note that here we also include the graph for the USA which is an external factor we assume to be influential on all four economies of interest (and in turn on the according national stock indices). Compared to the previous developments of the dependent variables, the key independent variables show a relatively more similar, congruent evolution. Remarkable is the major, well visible downturn in the aftermath of financial crisis in all five graphs.  
@@ -117,7 +124,7 @@ p9 <- ggplot(data = merge10, aes(x = Date, y = USA.GDP)) + geom_line() + scale_x
 ```
 
 ```{r, echo=FALSE}
-multiplot(p5, p6, p7, p8, p9, cols = 2)
+multiplot(p7, p5, p8, p6, p9, cols = 2)
 ```
 
 **Figure 3** summarizes the main characteristics for the depent and key indepent variables.
